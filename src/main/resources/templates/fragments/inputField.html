@@ -1,0 +1,24 @@
+<!-- inputField Fragment -->
+<div th:fragment="formField(object, fieldName, type)" th:object="${__${object}__}">
+    
+    <!-- Label -->
+    <label th:for="${#strings.toLowerCase(fieldName)}" class="col-lg-4 col-form-label">
+        <span th:text="#{${fieldName}.label}"></span>
+    </label>
+
+    <!-- Input Container -->
+    <div class="col-lg-6">
+        <!-- Input Field -->
+        <input class="form-control" 
+               type="${type}" 
+               th:id="${#strings.toLowerCase(fieldName)}" 
+               th:name="${#strings.toLowerCase(fieldName)}" 
+               th:placeholder="#{${object}.${fieldName}.placeholder}"/>
+
+        <!-- Error Messages -->
+        <ul class="invalid-feedback animated fadeInDown" style="display: block;">
+            <li th:each="err : ${#fields.errors(fieldName)}" th:text="${err}"></li>
+        </ul>
+    </div>
+
+</div>

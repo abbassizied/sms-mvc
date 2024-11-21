@@ -13,7 +13,7 @@ import jakarta.validation.Valid;
  
 
 @Controller
-@RequestMapping("/{lang}/suppliers")
+@RequestMapping("/suppliers")
 public class SupplierController {
 
     private final SupplierService supplierService;

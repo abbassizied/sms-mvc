@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/{lang}/purchases")
+@RequestMapping("/purchases")
 public class PurchaseController {
 
 	private final PurchaseService purchaseService;

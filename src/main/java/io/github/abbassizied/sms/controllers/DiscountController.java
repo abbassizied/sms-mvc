@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/{lang}/discount")
+@RequestMapping("/discount")
 public class DiscountController {
 
 	private final DiscountService discountService;

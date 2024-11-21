@@ -5,34 +5,30 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/{lang}/dashboard")
+@RequestMapping("/dashboard")
 public class DashboardController {
 
-    // This method will capture the "lang" path variable and load the appropriate locale
     @GetMapping()
-    public String dashboard(@PathVariable String lang, Model model) {
-        // Optional: You can log or validate the language, or just let UrlLocaleResolver do it
-        System.out.println("Locale selected: " + lang); // for debugging
-        
+    public String dashboard(Model model) {
         // Return the dashboard view
         return "dashboard/dashboard";
     }
 
     // Super Admin Dashboard
     @GetMapping("/superadmin")
-    public String superAdminDashboard(@PathVariable String lang) {
+    public String superAdminDashboard() {
         return "dashboard/superadmin_dash";
     }
 
     // Admin Dashboard
     @GetMapping("/admin")
-    public String adminDashboard(@PathVariable String lang) {
+    public String adminDashboard() {
         return "dashboard/admin_dash";
     }
 
     // Agent Dashboard
     @GetMapping("/agent")
-    public String agentDashboard(@PathVariable String lang) {
+    public String agentDashboard() {
         return "dashboard/agent_dash";
     }
 }

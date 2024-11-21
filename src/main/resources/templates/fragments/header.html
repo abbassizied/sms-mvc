@@ -164,9 +164,9 @@
 						<div class="dropdown-content-body">
 							<ul>
 				                <!-- Link to change to English -->
-				                <li><a th:href="@{/en/dashboard}" th:text="#{app.lang.eng}"></a></li>
+				                <li><a th:href="@{/lang(lang='en')}" th:text="#{app.lang.eng}"></a></li>
 				                <!-- Link to change to French -->
-				                <li><a th:href="@{/fr/dashboard}" th:text="#{app.lang.fr}"></a></li>
+				                <li><a th:href="@{/lang(lang='fr')}" th:text="#{app.lang.fr}"></a></li>
 							</ul>
 						</div>
 					</div>

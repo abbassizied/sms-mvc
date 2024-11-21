@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/{lang}/users")
+@RequestMapping("/users")
 public class UserController { 
 	
 	// Redirect root URL to the paginated list view

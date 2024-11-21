@@ -19,7 +19,7 @@
 
 			<!-- Dashboard -->
 			<li class="mega-menu mega-menu-sm">
-				<a th:href="@{/{lang}/dashboard}" aria-expanded="false">
+				<a th:href="@{/dashboard}" aria-expanded="false">
 					<i class="fa fa-home menu-icon" aria-hidden="true"></i><span class="nav-text" th:text="#{app.label.dashboard}">Dashboard</span>
 				</a>
 			</li>
@@ -28,14 +28,14 @@
 
 			<!-- User Management -->
 			<li class="mega-menu mega-menu-sm">
-				<a th:href="@{/{lang}/users}" aria-expanded="false">
+				<a th:href="@{/users}" aria-expanded="false">
 					<i class="fa fa-users menu-icon"></i><span class="nav-text" th:text="#{user.title}">User Management</span>
 				</a>
 			</li>
 	
 			<!-- Role Management -->
 			<li class="mega-menu mega-menu-sm">
-				<a th:href="@{/{lang}/roles}" aria-expanded="false">
+				<a th:href="@{/roles}" aria-expanded="false">
 					<i class="fa fa-tasks menu-icon"></i><span class="nav-text" th:text="#{role.title}">Role Management</span>
 				</a>
 			</li>	
@@ -47,8 +47,8 @@
 					<i class="fa fa-cogs menu-icon"></i><span class="nav-text" th:text="#{product.title}">Products</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a th:href="@{/{lang}/products}" th:text="#{product.list}">Product List</a></li>
-					<li><a th:href="@{/{lang}/products/add}" th:text="#{product.create}">Add Product</a></li>
+					<li><a th:href="@{/products}" th:text="#{product.list}">Product List</a></li>
+					<li><a th:href="@{/products/add}" th:text="#{product.create}">Add Product</a></li>
 				</ul>
 			</li>
 
@@ -58,8 +58,8 @@
 					<i class="fa fa-truck menu-icon"></i><span class="nav-text" th:text="#{supplier.title}">Suppliers</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a th:href="@{/{lang}/suppliers}" th:text="#{supplier.list}">Supplier List</a></li>
-					<li><a th:href="@{/{lang}/suppliers/add}" th:text="#{supplier.create}">Add Supplier</a></li>
+					<li><a th:href="@{/suppliers}" th:text="#{supplier.list}">Supplier List</a></li>
+					<li><a th:href="@{/suppliers/add}" th:text="#{supplier.create}">Add Supplier</a></li>
 				</ul>
 			</li>
 
@@ -69,8 +69,8 @@
 					<i class="fa fa-shopping-cart menu-icon"></i><span class="nav-text" th:text="#{order.title}">Orders</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a th:href="@{/{lang}/orders}" th:text="#{order.list}">Order List</a></li>
-					<li><a th:href="@{/{lang}/orders/add}" th:text="#{order.create}">Add Order</a></li>
+					<li><a th:href="@{/orders}" th:text="#{order.list}">Order List</a></li>
+					<li><a th:href="@{/orders/add}" th:text="#{order.create}">Add Order</a></li>
 				</ul>
 			</li>
 
@@ -80,8 +80,8 @@
 					<i class="fa fa-cart-arrow-down menu-icon"></i><span class="nav-text" th:text="#{purchase.title}">Purchases</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a th:href="@{/{lang}/purchases}" th:text="#{purchase.list}">Purchase List</a></li>
-					<li><a th:href="@{/{lang}/purchases/add}" th:text="#{purchase.create}">Add Purchase</a></li>
+					<li><a th:href="@{/purchases}" th:text="#{purchase.list}">Purchase List</a></li>
+					<li><a th:href="@{/purchases/add}" th:text="#{purchase.create}">Add Purchase</a></li>
 				</ul>
 			</li>
 
@@ -91,8 +91,8 @@
 					<i class="fa fa-users menu-icon"></i><span class="nav-text" th:text="#{customer.title}">Customers</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a th:href="@{/{lang}/customers}" th:text="#{customer.list}">Customer List</a></li>
-					<li><a th:href="@{/{lang}/customers/add}" th:text="#{customer.create}">Add Customer</a></li>
+					<li><a th:href="@{/customers}" th:text="#{customer.list}">Customer List</a></li>
+					<li><a th:href="@{/customers/add}" th:text="#{customer.create}">Add Customer</a></li>
 				</ul>
 			</li>			
 			
@@ -104,7 +104,7 @@
 			<!-- Chat Management -->
 			<li class="mega-menu mega-menu-sm">
 			    <!-- Dynamic chat title from messages.properties -->
-			    <a th:href="@{'/{lang}/chats'}" aria-expanded="false">
+			    <a th:href="@{'/chats'}" aria-expanded="false">
 			        <i class="fa fa-commenting-o menu-icon" aria-hidden="true"></i>
 			        <span class="nav-text" th:text="#{chat.title}">Chat</span>
 			    </a>
@@ -113,7 +113,7 @@
 			<!-- Messages Management -->
 			<li class="mega-menu mega-menu-sm">
 			    <!-- Dynamic message title from messages.properties -->
-			    <a th:href="@{'/{lang}/messages'}" aria-expanded="false">
+			    <a th:href="@{'/messages'}" aria-expanded="false">
 			        <i class="fa fa-envelope-o menu-icon" aria-hidden="true"></i>
 			        <span class="nav-text" th:text="#{message.title}">Messages</span>
 			    </a>

@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/{lang}/roles")
+@RequestMapping("/roles")
 public class RoleController {
 
 	// Redirect root URL to the paginated list view

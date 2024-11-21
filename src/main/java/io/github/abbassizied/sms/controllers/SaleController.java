@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/{lang}/sales")
+@RequestMapping("/sales")
 public class SaleController {
   /*
    * 
