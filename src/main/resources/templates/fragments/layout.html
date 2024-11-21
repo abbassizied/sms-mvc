@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Default Title</title>
+	<!-- Add your CSS or JS files here if necessary -->
+	<link rel="stylesheet" th:href="@{/shared/css/styles.css}" />
+	<!-- Custom JS -->
+	<script type="text/javascript" th:src="@{/shared/js/scripts.js}"></script>
+
+	<!-- Favicon icon -->
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/backoffice/images/favicon.png}">
+	<!-- Pignose Calender -->
+	<link th:href="@{/backoffice/plugins/pg-calendar/css/pignose.calendar.min.css}" rel="stylesheet">
+	<!-- Chartist -->
+	<link rel="stylesheet" th:href="@{/backoffice/plugins/chartist/css/chartist.min.css}">
+	<link rel="stylesheet" th:href="@{/backoffice/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css}">
+	<!-- Custom Stylesheet -->
+	<link th:href="@{/backoffice/css/style.css}" rel="stylesheet">
+</head>
+<body>
+
+
+	<!--***** Preloader start *****-->
+	<div th:replace="~{fragments/header :: preloader}"></div>
+	<!--***** Preloader end *****-->
+
+	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+	<div id="main-wrapper">
+
+		<!--***** Nav header start *****-->
+		<div th:replace="~{fragments/header :: logo}"></div>
+		<!--***** Nav header end *****-->
+ 
+		<!--***** Header start *****-->
+		<header th:replace="~{fragments/header :: header}"></header>
+		<!--***** Header end *****-->		
+	
+		<!--***** Sidebar start *****-->
+		<div th:replace="~{fragments/sidebar :: sidebar}"></div>
+		<!--***** Sidebar end *****-->	
+	
+
+		<!--**********************************
+            Content body start
+        ***********************************-->
+		<div class="content-body">
+
+			<div class="container-fluid mt-3">	
+				<!-- This is where content from child templates will be inserted -->
+				<div layout:fragment="content"></div>
+			</div>
+
+		</div>
+		<!--**********************************
+            Content body end
+        ***********************************-->
+
+
+		<!--***** Footer start *****-->
+		<footer th:replace="~{fragments/footer :: footer}"></footer>
+		<!--***** Footer end *****-->
+
+	</div>
+	<!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+
+	<!--**********************************
+        Scripts
+    ***********************************-->
+	<script th:src="@{/backoffice/plugins/common/common.min.js}"></script>
+	<script th:src="@{/backoffice/js/custom.min.js}"></script>
+	<script th:src="@{/backoffice/js/settings.js}"></script>
+	<script th:src="@{/backoffice/js/gleek.js}"></script>
+	<script th:src="@{/backoffice/js/styleSwitcher.js}"></script>
+
+	<!-- Chartjs -->
+	<script th:src="@{/backoffice/plugins/chart.js/Chart.bundle.min.js}"></script>
+	<!-- Circle progress -->
+	<script th:src="@{/backoffice/plugins/circle-progress/circle-progress.min.js}"></script>
+	<!-- Datamap -->
+	<script th:src="@{/backoffice/plugins/d3v3/index.js}"></script>
+	<script th:src="@{/backoffice/plugins/topojson/topojson.min.js}"></script>
+	<script th:src="@{/backoffice/plugins/datamaps/datamaps.world.min.js}"></script>
+	<!-- Morrisjs -->
+	<script th:src="@{/backoffice/plugins/raphael/raphael.min.js}"></script>
+	<script th:src="@{/backoffice/plugins/morris/morris.min.js}"></script>
+	<!-- Pignose Calender -->
+	<script th:src="@{/backoffice/plugins/moment/moment.min.js}"></script>
+	<script th:src="@{/backoffice/plugins/pg-calendar/js/pignose.calendar.min.js}"></script>
+	<!-- ChartistJS -->
+	<script th:src="@{/backoffice/plugins/chartist/js/chartist.min.js}"></script>
+	<script th:src="@{/backoffice/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js}"></script>
+
+	<script th:src="@{/backoffice/js/dashboard/dashboard-1.js}"></script>
+
+</body>
+</html>
