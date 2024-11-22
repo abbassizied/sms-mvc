@@ -1,0 +1,48 @@
+<!-- How to use it?
+ 
+  <div th:replace="~{fragments/selectField :: select( field = 'address', label = 'Gender', items = ${genders}, multiple=false )}" >
+  </div>									
+									
+  <div th:replace="~{fragments/selectField :: select( field = 'address', label = 'Gender', items = ${genders}, multiple=true )}" >
+  </div>
+
+--> 
+
+
+<!-- This is the fragment definition --> 
+<th:block th:fragment="select(field, label, items, multiple)">
+    <div th:with="valid=${!#fields.hasErrors(field)}"
+	     class="form-group row">
+		 
+		<!-- Label -->
+		<label class="col-lg-4 col-form-label" 
+		       th:for="${#strings.toLowerCase(field)}">
+		    <span th:text="${label}">Default Label</span>
+			<!-- Display error indicator if there is an error -->
+			<span th:if="${!valid}" class="text-danger">*</span>
+		</label>		
+		<!-- Select Container -->
+        <div class="col-lg-6">
+			<!-- Select Field -->
+			<select class="form-control"
+                    th:field="*{__${field}__}"			
+			        th:name="${#strings.toLowerCase(field)}"
+					th:id="${#strings.toLowerCase(field)}"
+					th:multiple="${multiple}">
+			  <!-- Placeholder -->
+			  <option value=""  th:if="${multiple == false}" th:text="#{form.select.placeholder}">--</option>
+			  <!-- Options -->
+			  <option th:each="item : ${items}" 
+			          th:value="${item}"
+                      th:text="${item}"></option>
+			</select>						
+
+			<!-- Error Messages -->
+			<ul class="invalid-feedback animated fadeInDown" 
+				style="display: block;">
+				<li th:each="err : ${#fields.errors(field)}" th:text="${err}">
+				</li>
+			</ul>				   
+        </div>
+    </div>
+</th:block >

@@ -4,6 +4,8 @@ import io.github.abbassizied.sms.entities.Supplier;
 import io.github.abbassizied.sms.services.SupplierService; 
 import io.github.abbassizied.sms.forms.SupplierForm;
 
+import java.util.Arrays;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model; 
 import org.springframework.web.bind.annotation.*; 
@@ -36,6 +38,7 @@ public class SupplierController {
 
     @GetMapping("/add")
     public String addSupplierForm(Model model) {  
+    model.addAttribute("genders", Arrays.asList("Male", "Female", "Other"));
        model.addAttribute("supplierForm", new SupplierForm()); 
         return "supplier/addSupplier";
     }
@@ -43,7 +46,12 @@ public class SupplierController {
     @PostMapping("/add") 
     public String addSupplier(@Valid @ModelAttribute("supplierForm") SupplierForm supplierForm,
             BindingResult bindingResult, Model model) { 
+    	System.out.println("Raw form data: " + supplierForm);
         if (bindingResult.hasErrors()) {
+            System.out.println("Validation errors: " + bindingResult.getAllErrors());
+            System.out.println("Form data: " + supplierForm);
+            // Reload form with validation errors
+            model.addAttribute("genders", Arrays.asList("Male", "Female", "Other"));
             return "supplier/addSupplier";
         }
 

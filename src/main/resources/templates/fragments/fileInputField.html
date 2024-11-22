@@ -1,19 +1,24 @@
-<!-- How to use it?
-							
-	<div th:replace="~{fragments/inputField :: input(
-		field='companyName',
-		type='text',
-		label=${#messages.msg('supplier.companyName.label')},
-		placeholder=${#messages.msg('supplier.companyName.placeholder')} 
-		)}"								
-	></div>
+<!-- 
+
+<div class="form-group row">
+    <label class="col-lg-4 col-form-label">Input File
+		<span class="text-danger">*</span>
+    </label>
+    <div class="col-lg-6"> 
+        <div class="custom-file">
+            <input type="file" class="custom-file-input">
+            <label class="custom-file-label">Choose file</label>
+        </div>
+    </div>	 	
+</div>	
+
 -->
 
 
 <!-- This is the fragment definition --> 
-<th:block  th:fragment="input(field, type, label, placeholder)">
+<th:block  th:fragment="fileInput(field, label, placeholder)">
     <div th:with="valid=${!#fields.hasErrors(field)}"
-	     class="form-group row">
+	     th:class="form-group row">
 		 
 		<!-- Label -->
 		<label class="col-lg-4 col-form-label" 
@@ -41,3 +46,8 @@
         </div>
     </div>
 </th:block >
+
+
+
+
+

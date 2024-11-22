@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+</head>
+<body>
+	<div th:fragment="supplierForm">
+
+
+		<div class="container-fluid">
+		    <div class="row justify-content-center">
+		        <div class="col-lg-12">
+		            <div class="card">
+		                <div class="card-body">
+		                    <div class="form-validation">
+		                        <form class="form-valide" 
+										th:action="@{/suppliers/add}" 
+										th:object="${supplierForm}" 
+										enctype="multipart/form-data" 
+										method="post">
+								 
+										
+										<!-- This is the fragment usage in your HTML -->
+										<div th:replace="~{fragments/formFields :: input(
+										    field='companyName',
+										    type='text',
+										    label=${#messages.msg('supplier.companyName.label')},
+											placeholder=${#messages.msg('supplier.companyName.placeholder')} 
+											)}"
+											
+										></div>
+												
+									
+									    <div th:replace="~{fragments/formFields :: textarea(
+										    field='phone', 
+											label=${#messages.msg('supplier.phone.label')},
+											placeholder=${#messages.msg('supplier.phone.placeholder')} 
+											)}"
+										></div>							 
+									
+										
+							
+										
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+										
+										
+										
+										
+
+				
+									
+									
+									
+									
+		                            <!-- Submit Button -->
+		                            <div class="form-group row">
+		                                <div class="col-lg-8 ml-auto">
+		                                    <button type="submit" class="btn btn-primary">Submit</button>
+		                                </div>
+		                            </div>
+		                        </form>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+
+
+		
+		
+		
+
+
+
+
+	</div>
+</body>
+</html>

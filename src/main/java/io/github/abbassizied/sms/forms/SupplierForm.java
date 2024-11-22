@@ -10,7 +10,9 @@ import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.URL;
 
 public class SupplierForm {
-
+	
+	private Long id;
+	
     // Company Name: Required, not empty, between 2 and 30 characters
     @NotBlank(message = "{supplier.companyName.notBlank}")
     @Size(min = 2, max = 30, message = "{supplier.companyName.size}")
@@ -59,7 +61,14 @@ public class SupplierForm {
     }
 
     // Getters and Setters
+	public Long getId() {
+		return id;
+	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
     public String getCompanyName() {
         return companyName;
     }

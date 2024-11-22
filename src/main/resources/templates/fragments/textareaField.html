@@ -1,17 +1,17 @@
-<!-- How to use it?
-							
-	<div th:replace="~{fragments/inputField :: input(
-		field='companyName',
-		type='text',
+<!-- How to use it
+ 
+    <div th:replace="~{fragments/textareaField :: textarea(
+	    field='companyName', 
 		label=${#messages.msg('supplier.companyName.label')},
 		placeholder=${#messages.msg('supplier.companyName.placeholder')} 
-		)}"								
+		)}"
 	></div>
--->
 
+
+ --> 
 
 <!-- This is the fragment definition --> 
-<th:block  th:fragment="input(field, type, label, placeholder)">
+<th:block  th:fragment="textarea(field, label, placeholder)">
     <div th:with="valid=${!#fields.hasErrors(field)}"
 	     class="form-group row">
 		 
@@ -22,16 +22,17 @@
 			<!-- Display error indicator if there is an error -->
 			<span th:if="${!valid}" class="text-danger">*</span>
 		</label>		
-		<!-- Input Container -->
+		<!-- Textarea Container -->
         <div class="col-lg-6">
-			<!-- Input Field -->
-			<input class="form-control"
-			       th:type="${type}" 
-				   th:field="*{__${field}__}"
-			       th:id="${#strings.toLowerCase(field)}" 
-			       th:name="${#strings.toLowerCase(field)}" 
-			       th:placeholder="${placeholder}"/>			
-
+			<!-- Textarea Field -->
+			<textarea class="form-control" 
+			          th:id="${#strings.toLowerCase(field)}" 
+					  th:field="*{__${field}__}"
+					  th:name="${#strings.toLowerCase(field)}"  
+					  rows="5" 
+					  th:placeholder="${placeholder}">
+			</textarea>
+ 
 			<!-- Error Messages -->
 			<ul class="invalid-feedback animated fadeInDown" 
 				style="display: block;">

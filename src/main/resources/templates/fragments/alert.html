@@ -1,0 +1,41 @@
+<!-- How to use the alert fragment ?
+ 
+    <div th:replace="~{fragments/alert :: alert('success', 'Operation was successful!')}"></div>
+
+    <div th:replace="~{fragments/alert :: alert('danger', 'Something went wrong!')}"></div>
+
+-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alert Fragment</title>
+</head>
+<body>
+
+    <!-- Alert Fragment -->
+    <div th:fragment="alert(type, message)" 
+         th:assert="${!#strings.isEmpty(type) and !#strings.isEmpty(message)}">
+         
+        <!-- Success Alert -->
+        <div th:if="${type == 'success'}" class="alert alert-primary alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <span th:text="${message}">Test</span>
+        </div>
+
+        <!-- Danger Alert -->
+        <div th:if="${type == 'danger'}" class="alert alert-danger alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <span th:text="${message}">Test</span>
+        </div>
+        
+    </div>
+
+</body>
+</html>
