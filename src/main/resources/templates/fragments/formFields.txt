@@ -1,0 +1,40 @@
+//-------------------------------------------------------------------------
+	<div th:replace="~{fragments/inputField :: input(
+		field='companyName',
+		type='text',
+		label=${#messages.msg('supplier.companyName.label')},
+		placeholder=${#messages.msg('supplier.companyName.placeholder')} 
+		)}"								
+	></div>
+//-------------------------------------------------------------------------
+    <div th:replace="~{fragments/textareaField :: textarea(
+	    field='companyName', 
+		label=${#messages.msg('supplier.companyName.label')},
+		placeholder=${#messages.msg('supplier.companyName.placeholder')} 
+		)}"
+	></div>
+//-------------------------------------------------------------------------
+    <div th:replace="~{fragments/selectField :: select( field = 'address', label = 'Gender', items = ${genders}, multiple=false )}" >
+    </div>	
+//-------------------------------------------------------------------------
+	<div th:replace="~{fragments/checkboxFields :: checkbox(
+		field='address', 
+		label=${#messages.msg('supplier.companyName.label')},
+		options=${genders}
+		)}">
+	</div>
+//-------------------------------------------------------------------------
+	<div th:replace="~{fragments/radioField :: radio(
+		field='address', 
+		label=${#messages.msg('supplier.companyName.label')},
+		options=${genders}
+		)}">
+	</div>
+//-------------------------------------------------------------------------
+	<div th:replace="~{fragments/fileInputField :: fileInput(
+	    field='logoUrl', 
+	    label=${#messages.msg('supplier.logoUrl.label')},
+		placeholder=${#messages.msg('supplier.logoUrl.placeholder')} 
+		)}" 
+	></div>	
+//-------------------------------------------------------------------------	

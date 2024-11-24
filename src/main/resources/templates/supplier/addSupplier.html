@@ -8,9 +8,11 @@
 <body>
 	<section layout:fragment="content">
 		
-		
-		
-		<div th:replace="~{supplier/supplierForm :: supplierForm}"></div>
+		<div th:replace="~{supplier/supplierForm :: supplierForm(
+			action='add', 
+			buttonLabel=${#messages.msg('label.create')}
+			)}">
+		</div>
 
 		
 		

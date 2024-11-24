@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+</head>
+<body>
+
+
+
+<!-- Input fragment definition --> 
+<th:block  th:fragment="input(field, type, label, placeholder)">
+    <div th:with="valid=${!#fields.hasErrors(field)}"
+	     class="form-group row">
+		 
+		<!-- Label -->
+		<label class="col-lg-4 col-form-label" 
+		       th:for="${#strings.toLowerCase(field)}">
+		    <span th:text="${label}">Default Label</span>
+			<!-- Display error indicator if there is an error -->
+			<span th:if="${!valid}" class="text-danger">*</span>
+		</label>		
+		<!-- Input Container -->
+        <div class="col-lg-6">
+			<!-- Input Field -->
+			<input class="form-control"
+			       th:type="${type}" 
+				   th:field="*{__${field}__}"
+			       th:id="${#strings.toLowerCase(field)}"  
+			       th:placeholder="${placeholder}"/>			
+
+			<!-- Error Messages -->
+			<ul class="invalid-feedback animated fadeInDown" 
+				style="display: block;">
+				<li th:each="err : ${#fields.errors(field)}" th:text="${err}">
+				</li>
+			</ul>				   
+        </div>
+    </div>
+</th:block >
+
+ 
+<!-- Select fragment definition --> 
+<th:block th:fragment="select(field, label, items, multiple)">
+    <div th:with="valid=${!#fields.hasErrors(field)}"
+	     class="form-group row">
+		 
+		<!-- Label -->
+		<label class="col-lg-4 col-form-label" 
+		       th:for="${#strings.toLowerCase(field)}">
+		    <span th:text="${label}">Default Label</span>
+			<!-- Display error indicator if there is an error -->
+			<span th:if="${!valid}" class="text-danger">*</span>
+		</label>		
+		<!-- Select Container -->
+        <div class="col-lg-6">
+			<!-- Select Field -->
+			<select class="form-control"
+                    th:field="*{__${field}__}"			
+					th:id="${#strings.toLowerCase(field)}"
+					th:multiple="${multiple}">
+			  <!-- Placeholder -->
+			  <option value=""  th:if="${multiple == false}" th:text="#{form.select.placeholder}">--</option>
+			  <!-- Options -->
+			  <option th:each="item : ${items}" 
+			          th:value="${item}"
+                      th:text="${item}"></option>
+			</select>						
+
+			<!-- Error Messages -->
+			<ul class="invalid-feedback animated fadeInDown" 
+				style="display: block;">
+				<li th:each="err : ${#fields.errors(field)}" th:text="${err}">
+				</li>
+			</ul>				   
+        </div>
+    </div>
+</th:block >
+
+
+
+
+
+<!-- TextArea Fragment Definition -->
+<th:block  th:fragment="textarea(field, label, placeholder)">
+    <div th:with="valid=${!#fields.hasErrors(field)}"
+	     class="form-group row">
+		 
+		<!-- Label -->
+		<label class="col-lg-4 col-form-label" 
+		       th:for="${#strings.toLowerCase(field)}">
+		    <span th:text="${label}">Default Label</span>
+			<!-- Display error indicator if there is an error -->
+			<span th:if="${!valid}" class="text-danger">*</span>
+		</label>		
+		<!-- Textarea Container -->
+        <div class="col-lg-6">
+			<!-- Textarea Field -->
+			<textarea class="form-control" 
+			          th:id="${#strings.toLowerCase(field)}" 
+					  th:field="*{__${field}__}"  
+					  rows="5" 
+					  th:placeholder="${placeholder}">
+			</textarea>
+ 
+			<!-- Error Messages -->
+			<ul class="invalid-feedback animated fadeInDown" 
+				style="display: block;">
+				<li th:each="err : ${#fields.errors(field)}" th:text="${err}">
+				</li>
+			</ul>				   
+        </div>
+    </div>
+</th:block >
+
+
+
+
+<!-- Checkbox Fragment Definition -->
+<th:block th:fragment="checkbox(field, label, options)">
+    <div th:with="valid=${!#fields.hasErrors(field)}"
+         th:class="'form-group row'">
+         
+        <!-- Label -->
+        <label class="col-lg-4 col-form-label" 
+               th:for="${#strings.toLowerCase(field)}">
+            <span th:text="${label}">Default Label</span>
+            <!-- Display error indicator if there is an error -->
+            <span th:if="${!valid}" class="text-danger">*</span>
+        </label>      
+        
+        <!-- Checkbox Container -->
+        <div class="col-lg-6">
+            <!-- Checkboxes -->
+            <div th:each="option : ${options}" class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input type="checkbox" 
+                           class="form-check-input"  
+                           th:value="${option}" 
+                           th:field="*{__${field}__}" /> 
+                    <span th:text="${option}">Option Label</span>
+                </label>
+            </div>
+
+            <!-- Error Messages -->
+            <ul class="invalid-feedback animated fadeInDown" 
+                th:if="${!valid}">
+                <li th:each="err : ${#fields.errors(field)}" th:text="${err}"></li>
+            </ul>                   
+        </div>
+    </div>
+</th:block>
+
+
+
+ <!-- Radio Buttons fragment definition -->  
+ <th:block th:fragment="radio(field, label, options)">
+     <div th:with="valid=${!#fields.hasErrors(field)}"
+          th:class="'form-group row'">
+         
+         <!-- Label -->
+         <label class="col-lg-4 col-form-label" 
+                th:for="${#strings.toLowerCase(field)}">
+             <span th:text="${label}">Default Label</span>
+             <span th:if="${!valid}" class="text-danger">*</span>
+         </label>
+         
+         <!-- Radio Buttons -->
+         <div class="col-lg-6">
+             <span th:each="option : ${options}">
+                 <label class="radio-inline mr-3">
+                     <input type="radio"  
+                            th:value="${option}" 
+                            th:field="*{__${field}__}">
+                     <span th:text="${option}">Option Label</span>
+                 </label>           
+             </span>
+
+             <!-- Error Messages -->
+             <ul class="invalid-feedback animated fadeInDown" 
+                 th:if="${!valid}">
+                 <li th:each="err : ${#fields.errors(field)}" th:text="${err}"></li>
+             </ul>                   
+         </div>
+     </div>
+ </th:block>
+
+
+
+ <!-- InputFile fragment definition --> 
+ <th:block  th:fragment="fileInput(field, label, placeholder)">
+	<div th:with="valid=${!#fields.hasErrors(field)}"
+	     th:class="'form-group row'">
+ 		 
+ 		<!-- Label -->
+ 		<label class="col-lg-4 col-form-label" 
+ 		       th:for="${#strings.toLowerCase(field)}">
+ 		    <span th:text="${label}">Default Label</span>
+ 			<!-- Display error indicator if there is an error -->
+ 			<span th:if="${!valid}" class="text-danger">*</span>
+ 		</label>		
+ 		<!-- InputFile Container -->
+         <div class="col-lg-6">
+ 			<!-- InputFile Field -->
+ 			<div class="custom-file">
+ 				<input type="file" 
+ 				       th:field="*{__${field}__}"
+ 			           th:id="${#strings.toLowerCase(field)}"
+ 					   th:name="${#strings.toLowerCase(field)}"
+ 				       class="custom-file-input">
+ 				<label class="custom-file-label" th:text="${placeholder}">Placeholder Label</label>
+             </div> 			
+
+ 			<!-- Error Messages -->
+ 			<ul class="invalid-feedback animated fadeInDown" 
+ 				style="display: block;">
+ 				<li th:each="err : ${#fields.errors(field)}" th:text="${err}">
+ 				</li>
+ 			</ul>				   
+         </div>
+     </div>
+ </th:block >
+
+
+
+
+
+
+
+
+
+</body>
+</html>

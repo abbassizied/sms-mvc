@@ -43,24 +43,37 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	@Override
-	public void store(MultipartFile file) {
-		try {
-			if (file.isEmpty()) {
-				throw new StorageException("Failed to store empty file.");
-			}
-			Path destinationFile = this.rootLocation.resolve(Paths.get(file.getOriginalFilename())).normalize()
-					.toAbsolutePath();
-			if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
-				// This is a security check
-				throw new StorageException("Cannot store file outside current directory.");
-			}
-			try (InputStream inputStream = file.getInputStream()) {
-				Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
-			}
-		} catch (IOException e) {
-			throw new StorageException("Failed to store file.", e);
-		}
+	public String store(MultipartFile file) {
+	    try {
+	        if (file.isEmpty()) {
+	            throw new StorageException("Failed to store empty file.");
+	        }
+
+	        // Generate a unique file name using System.currentTimeMillis() + original file name
+	        String originalFileName = file.getOriginalFilename();
+	        String uniqueFileName = System.currentTimeMillis() + "_" + (originalFileName != null ? originalFileName : "unnamed");
+
+	        // Resolve the file path
+	        Path destinationFile = this.rootLocation.resolve(Paths.get(uniqueFileName)).normalize().toAbsolutePath();
+
+	        // Security check to prevent path traversal attacks
+	        if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
+	            throw new StorageException("Cannot store file outside current directory.");
+	        }
+
+	        // Save the file
+	        try (InputStream inputStream = file.getInputStream()) {
+	            Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
+	        }
+
+	        // Return the unique file name
+	        return uniqueFileName;
+
+	    } catch (IOException e) {
+	        throw new StorageException("Failed to store file.", e);
+	    }
 	}
+
 
 	@Override
 	public Stream<Path> loadAll() {

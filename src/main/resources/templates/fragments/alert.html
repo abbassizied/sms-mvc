@@ -10,32 +10,38 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alert Fragment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 </head>
 <body>
 
-    <!-- Alert Fragment -->
-    <div th:fragment="alert(type, message)" 
-         th:assert="${!#strings.isEmpty(type) and !#strings.isEmpty(message)}">
-         
-        <!-- Success Alert -->
-        <div th:if="${type == 'success'}" class="alert alert-primary alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <span th:text="${message}">Test</span>
-        </div>
 
-        <!-- Danger Alert -->
-        <div th:if="${type == 'danger'}" class="alert alert-danger alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <span th:text="${message}">Test</span>
-        </div>
+
+
+    <!-- Alert Fragment -->
+    <th:block th:fragment="alert" class="row justify-content-center">
+        <div th:if="${alert != null}">
+
+				           	<!-- Success Alert -->
+					        <div th:if="${alert.type == 'success'}" class="alert alert-success alert-dismissible fade show">
+					            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					                <span aria-hidden="true">&times;</span>
+					            </button>
+					            <span th:text="${alert.message}">Operation was successful!</span>
+					        </div>
+					
+					        <!-- Danger Alert -->
+					        <div th:if="${alert.type == 'danger'}" class="alert alert-danger alert-dismissible fade show">
+					            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					                <span aria-hidden="true">&times;</span>
+					            </button>
+					            <span th:text="${alert.message}">Something went wrong!</span>
+					        </div>                   
         
-    </div>
+        </div> 
+    </th:block>
+
+
+
 
 </body>
 </html>

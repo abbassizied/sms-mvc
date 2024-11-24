@@ -13,39 +13,48 @@
 
 -->
 
+<!-- 
 
-<!-- This is the fragment definition --> 
-<th:block  th:fragment="radio(field, label, placeholder)">
-    <div th:with="valid=${!#fields.hasErrors(field)}"
-	     th:class="form-group row">
-		 
-		<!-- Label -->
-		<label class="col-lg-4 col-form-label" 
-		       th:for="${#strings.toLowerCase(field)}">
-		    <span th:text="${label}">Default Label</span>
-			<!-- Display error indicator if there is an error -->
-			<span th:if="${!valid}" class="text-danger">*</span>
-		</label>		
-		<!-- Input Container -->
-        <div class="col-lg-6">
-			<!-- Input Field -->
-			<input class="form-control"
-			       th:type="${type}" 
-				   th:field="*{__${field}__}"
-			       th:id="${#strings.toLowerCase(field)}" 
-			       th:name="${#strings.toLowerCase(field)}" 
-			       th:placeholder="${placeholder}"/>			
+	<div th:replace="~{fragments/radioField :: radio(
+		field='address', 
+		label=${#messages.msg('supplier.companyName.label')},
+		options=${genders}
+		)}">
+	</div>
+	
+ --> 
 
-			<!-- Error Messages -->
-			<ul class="invalid-feedback animated fadeInDown" 
-				style="display: block;">
-				<li th:each="err : ${#fields.errors(field)}" th:text="${err}">
-				</li>
-			</ul>				   
-        </div>
-    </div>
-</th:block >
+ <!-- This is the fragment definition -->  
+ <th:block th:fragment="radio(field, label, options)">
+     <div th:with="valid=${!#fields.hasErrors(field)}"
+          th:class="'form-group row'">
+         
+         <!-- Label -->
+         <label class="col-lg-4 col-form-label" 
+                th:for="${#strings.toLowerCase(field)}">
+             <span th:text="${label}">Default Label</span>
+             <span th:if="${!valid}" class="text-danger">*</span>
+         </label>
+         
+         <!-- Radio Buttons -->
+         <div class="col-lg-6">
+             <span th:each="option : ${options}">
+                 <label class="radio-inline mr-3">
+                     <input type="radio"  
+                            th:value="${option}" 
+                            th:field="*{__${field}__}">
+                     <span th:text="${option}">Option Label</span>
+                 </label>           
+             </span>
 
+             <!-- Error Messages -->
+             <ul class="invalid-feedback animated fadeInDown" 
+                 th:if="${!valid}">
+                 <li th:each="err : ${#fields.errors(field)}" th:text="${err}"></li>
+             </ul>                   
+         </div>
+     </div>
+ </th:block>
 
 
 

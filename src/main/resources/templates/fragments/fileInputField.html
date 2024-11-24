@@ -15,39 +15,47 @@
 -->
 
 
-<!-- This is the fragment definition --> 
-<th:block  th:fragment="fileInput(field, label, placeholder)">
-    <div th:with="valid=${!#fields.hasErrors(field)}"
-	     th:class="form-group row">
-		 
-		<!-- Label -->
-		<label class="col-lg-4 col-form-label" 
-		       th:for="${#strings.toLowerCase(field)}">
-		    <span th:text="${label}">Default Label</span>
-			<!-- Display error indicator if there is an error -->
-			<span th:if="${!valid}" class="text-danger">*</span>
-		</label>		
-		<!-- Input Container -->
-        <div class="col-lg-6">
-			<!-- Input Field -->
-			<input class="form-control"
-			       th:type="${type}" 
-				   th:field="*{__${field}__}"
-			       th:id="${#strings.toLowerCase(field)}" 
-			       th:name="${#strings.toLowerCase(field)}" 
-			       th:placeholder="${placeholder}"/>			
+<!-- How to use it?
 
-			<!-- Error Messages -->
-			<ul class="invalid-feedback animated fadeInDown" 
-				style="display: block;">
-				<li th:each="err : ${#fields.errors(field)}" th:text="${err}">
-				</li>
-			</ul>				   
-        </div>
-    </div>
-</th:block >
+	<div th:replace="~{fragments/fileInputField :: fileInput(
+	    field='logoUrl', 
+	    label=${#messages.msg('supplier.logoUrl.label')},
+		placeholder=${#messages.msg('supplier.logoUrl.placeholder')} 
+		)}" 
+	></div>	
 
+ --> 
 
+ <!-- This is the fragment definition --> 
+ <th:block  th:fragment="fileInput(field, label, placeholder)">
+	<div th:with="valid=${!#fields.hasErrors(field)}"
+	     th:class="'form-group row'">
+ 		 
+ 		<!-- Label -->
+ 		<label class="col-lg-4 col-form-label" 
+ 		       th:for="${#strings.toLowerCase(field)}">
+ 		    <span th:text="${label}">Default Label</span>
+ 			<!-- Display error indicator if there is an error -->
+ 			<span th:if="${!valid}" class="text-danger">*</span>
+ 		</label>		
+ 		<!-- InputFile Container -->
+         <div class="col-lg-6">
+ 			<!-- InputFile Field -->
+ 			<div class="custom-file">
+ 				<input type="file" 
+ 				       th:field="*{__${field}__}"
+ 			           th:id="${#strings.toLowerCase(field)}"
+ 					   th:name="${#strings.toLowerCase(field)}"
+ 				       class="custom-file-input">
+ 				<label class="custom-file-label" th:text="${placeholder}">Placeholder Label</label>
+             </div> 			
 
-
-
+ 			<!-- Error Messages -->
+ 			<ul class="invalid-feedback animated fadeInDown" 
+ 				style="display: block;">
+ 				<li th:each="err : ${#fields.errors(field)}" th:text="${err}">
+ 				</li>
+ 			</ul>				   
+         </div>
+     </div>
+ </th:block >

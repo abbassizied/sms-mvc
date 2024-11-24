@@ -7,7 +7,41 @@
 </head>
 <body>
 	<section layout:fragment="content">
-		<!-- Supplier Management Content -->
+		
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title" th:text="#{supplier.details}">Default Tab</h1>
+                
+                    <div class="media align-items-center mb-4">
+                         <img class="mr-3" th:src="@{'/uploads/' + ${supplier.logoUrl}}" width="80" height="80" alt="">
+                          <div class="media-body">
+                                <h3 class="mb-0" th:text="#{supplier.companyName.label}">Company Name</h3>
+                                <p class="text-muted mb-0" th:text="${supplier.companyName}">Company Name</p>
+                           </div>
+                    </div>                
+                
+
+                    <h4 th:text="#{supplier.address.label }">Address</h4>
+                    <p class="text-muted" th:text="${supplier.address}">32 Rue De Lys El Hemaidia, Governorate Beja</p>
+                    <ul class="card-profile__info">
+                         <li class="mb-1"><strong class="text-dark mr-4" th:text="#{supplier.phone.label}">Phone</strong> <span th:text="${supplier.phone}">216 99 999 999</span></li>
+                         <li><strong class="text-dark mr-4" th:text="#{supplier.email.label}">Email</strong> <span th:text="${supplier.email}">name@domain.com</span></li>
+                    </ul>
+                
+                 
+                
+                            
+			</div>
+        </div>
+    </div>
+</div>
+
+
+
+
 	</section>
 </body>
 </html>
