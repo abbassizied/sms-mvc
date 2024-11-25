@@ -65,10 +65,10 @@ public class SupplierController {
 			return "supplier/addSupplier";
 		}
 		
-		String fileName = storageService.store(supplierForm.getLogoUrl());
+		String fileName = storageService.storeSingleFile(supplierForm.getLogoUrl());
 		// Convert SupplierForm to Supplier entity 
 		Supplier supplier = new Supplier();
-		supplier.setCompanyName(supplierForm.getCompanyName());
+		supplier.setName(supplierForm.getName());
 		supplier.setLogoUrl(fileName); // be carefull
 		supplier.setEmail(supplierForm.getEmail());
 		supplier.setPhone(supplierForm.getPhone());
@@ -102,7 +102,7 @@ public class SupplierController {
 	    // Convert Supplier entity to SupplierForm  
 	    SupplierForm supplierForm = new SupplierForm();
 	    supplierForm.setId(supplier.getId());
-	    supplierForm.setCompanyName(supplier.getCompanyName());
+	    supplierForm.setName(supplier.getName());
 	    supplierForm.setLogoUrl(null);  // You don't need to set the logoUrl from the supplier here as it's a file input in the form
 	    supplierForm.setEmail(supplier.getEmail());
 	    supplierForm.setPhone(supplier.getPhone());
@@ -130,12 +130,12 @@ public class SupplierController {
 	    	// delete old existing image from storage
 	    	storageService.delete(supplier.getLogoUrl()); 
 	    	// upload the new image
-	        String fileName = storageService.store(supplierForm.getLogoUrl());
+	        String fileName = storageService.storeSingleFile(supplierForm.getLogoUrl());
 	        supplier.setLogoUrl(fileName); // Update logo
 	    }
 	
 	    // Update other fields
-	    supplier.setCompanyName(supplierForm.getCompanyName());
+	    supplier.setName(supplierForm.getName());
 	    supplier.setEmail(supplierForm.getEmail());
 	    supplier.setPhone(supplierForm.getPhone());
 	    supplier.setAddress(supplierForm.getAddress());

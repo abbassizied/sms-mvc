@@ -33,8 +33,8 @@
 			  <option value=""  th:if="${multiple == false}" th:text="#{form.select.placeholder}">--</option>
 			  <!-- Options -->
 			  <option th:each="item : ${items}" 
-			          th:value="${item}"
-                      th:text="${item}"></option>
+			          th:value="${item.id}"
+                      th:text="${item.name}"></option>
 			</select>						
 
 			<!-- Error Messages -->

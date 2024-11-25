@@ -24,7 +24,7 @@
 
                                     <!-- Company Name Input -->
                                     <div th:replace="~{fragments/inputField :: input(
-                                        field='companyName',
+                                        field='name',
                                         type='text',
                                         label=${#messages.msg('supplier.companyName.label')},
                                         placeholder=${#messages.msg('supplier.companyName.placeholder')}
@@ -34,7 +34,8 @@
                                     <div th:replace="~{fragments/fileInputField :: fileInput(
                                         field='logoUrl', 
                                         label=${#messages.msg('supplier.logoUrl.label')},
-                                        placeholder=${#messages.msg('supplier.logoUrl.placeholder')}
+                                        placeholder=${#messages.msg('supplier.logoUrl.placeholder')},
+                                        multiple=false
                                     )}"></div>
 
                                     <!-- Email Input -->

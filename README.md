@@ -59,25 +59,43 @@ $ mvn spring-boot:run -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=d
 
 ## Core Entities
 
-- **Supplier**: Represents a supplier providing products.
+### Supplier Entity
+- Represents a supplier providing products.
 
 | Attribute      | Type        | Description                                   |
 |----------------|-------------|-----------------------------------------------|
 | `id`           | Integer     | Unique identifier for the supplier            |
 | `companyName`  | String      | Name of the supplier                          |
-| `logoUrl`      | String      | Contact person's name                         |
+| `logoUrl`      | String      | xxxxxxxxx logo image url xxxxxxxxx            |
 | `email`        | String      | Email address of the supplier                 |
 | `phone`        | String      | Phone number of the supplier                  |
 | `address`      | String      | Address of the supplier                       |
 | `createdAt`    | Timestamp   | Timestamp when the supplier was created       |
 | `updatedAt`    | Timestamp   | Timestamp when the supplier was last updated  |
 
+### Product Entity
+
+- Represents a product in the system.
+
+| Attribute      | Type        | Description                                  |
+|----------------|-------------|----------------------------------------------|
+| `id`           | Long        | Unique identifier for the product            |
+| `name`         | String      | Name of the product                          |
+| `mainImage`    | String      | xxxxxxxx main image url xxxxxxxx             |
+| `description`  | String      | Description of the product                   |
+| `price`        | Double      | Price of the product                         |
+| `quantity`     | Integer     | Quantity of the product in stock             |
+| `reorderLevel` | Integer     | Stock level at which reordering is triggered |
+| `supplier`     | Supplier    | The supplier associated with the product     |
+| `discount`     | Discount    | Discount applied to the product              |
+| `images`       | List<Image> | List of images associated with the product   |
+| `createdAt`    | Timestamp   | Timestamp when the product was created       |
+| `updatedAt`    | Timestamp   | Timestamp when the product was last updated  |
 
 
+### Discount + Image
 
-
-
-
+### 
 
 
 

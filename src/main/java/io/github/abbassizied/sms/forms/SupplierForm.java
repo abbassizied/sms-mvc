@@ -16,10 +16,10 @@ public class SupplierForm {
     // Company Name: Required, not empty, between 2 and 30 characters
     @NotBlank(message = "{supplier.companyName.notBlank}", groups = { OnCreate.class, OnUpdate.class })
     @Size(min = 2, max = 30, message = "{supplier.companyName.size}", groups = { OnCreate.class, OnUpdate.class })
-    private String companyName; 
+    private String name; 
 
     // Logo URL: Optional, but if provided must be a valid URL 
-    @ValidMultipartFile(message = "{supplier.logoUrl.invalid}", groups = OnCreate.class)
+    @ValidMultipartFile(groups = OnCreate.class)
     private MultipartFile logoUrl;
 
     // Email: Required, must be a valid email format
@@ -27,11 +27,11 @@ public class SupplierForm {
     @Email(message = "{supplier.email.invalid}", groups = { OnCreate.class, OnUpdate.class })
     private String email;
 
-    // Phone: Optional, but if provided must match the specified pattern
+    // Phone: Required, must match the specified pattern
     @Pattern(regexp = "^\\+216[\\s-]?\\d{8}$|^216[\\s-]?\\d{8}$|^\\+?[0-9]{8}$", message = "{supplier.phone.invalid}", groups = { OnCreate.class, OnUpdate.class })
     private String phone;
 
-    // Address: Optional, but if provided, must not exceed 100 characters
+    // Address: Required, must not exceed 100 characters
     @Size(max = 100, message = "{supplier.address.size}", groups = { OnCreate.class, OnUpdate.class })
     private String address;
 
@@ -41,24 +41,7 @@ public class SupplierForm {
      * Default constructor for form binding.
      */
     public SupplierForm() {
-    }
-
-    /**
-     * Parameterized constructor for creating SupplierForm instances.
-     *
-     * @param companyName the name of the company
-     * @param logoUrl the URL of the company's logo
-     * @param email the company's email address
-     * @param phone the company's phone number
-     * @param address the company's address
-     */
-    public SupplierForm(String companyName, MultipartFile logoUrl, String email, String phone, String address) {
-        this.companyName = companyName;
-        this.logoUrl = logoUrl;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-    }
+    } 
 
     // Getters and Setters
 	public Long getId() {
@@ -69,12 +52,12 @@ public class SupplierForm {
 		this.id = id;
 	}
 	
-    public String getCompanyName() {
-        return companyName;
+    public String getName() {
+        return name;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setName(String companyName) {
+        this.name = companyName;
     }
 
     public MultipartFile getLogoUrl() {
@@ -114,7 +97,7 @@ public class SupplierForm {
     @Override
     public String toString() {
         return "SupplierForm{" +
-                "companyName='" + companyName + '\'' +
+                "companyName='" + name + '\'' +
                 ", logoUrl='" + logoUrl + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +

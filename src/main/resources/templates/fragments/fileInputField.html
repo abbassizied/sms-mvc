@@ -27,7 +27,7 @@
  --> 
 
  <!-- This is the fragment definition --> 
- <th:block  th:fragment="fileInput(field, label, placeholder)">
+ <th:block  th:fragment="fileInput(field, label, placeholder, multiple)">
 	<div th:with="valid=${!#fields.hasErrors(field)}"
 	     th:class="'form-group row'">
  		 
@@ -42,11 +42,12 @@
          <div class="col-lg-6">
  			<!-- InputFile Field -->
  			<div class="custom-file">
- 				<input type="file" 
+ 				<input type="file"
+ 				       class="custom-file-input" 
  				       th:field="*{__${field}__}"
  			           th:id="${#strings.toLowerCase(field)}"
  					   th:name="${#strings.toLowerCase(field)}"
- 				       class="custom-file-input">
+					   th:multiple="${multiple}">
  				<label class="custom-file-label" th:text="${placeholder}">Placeholder Label</label>
              </div> 			
 

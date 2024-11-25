@@ -11,7 +11,7 @@ public class Supplier extends BaseEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String companyName;
+    private String name;
 
     private String logoUrl;
     private String email;
@@ -35,13 +35,13 @@ public class Supplier extends BaseEntity {
 		this.id = id;
 	}
 
-	public String getCompanyName() {
-		return companyName;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
 	public String getLogoUrl() {
 		return logoUrl;
@@ -81,6 +81,12 @@ public class Supplier extends BaseEntity {
 
 	public void setProducts(List<Product> products) {
 		this.products = products;
+	}
+
+	@Override
+	public String toString() {
+		return "Supplier [id=" + id + ", companyName=" + name + ", logoUrl=" + logoUrl + ", email=" + email
+				+ ", phone=" + phone + ", address=" + address + "]";
 	}
  	
 }

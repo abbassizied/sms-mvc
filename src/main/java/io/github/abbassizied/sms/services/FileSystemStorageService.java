@@ -7,6 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
  
 import org.springframework.core.io.Resource;
@@ -43,10 +45,10 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	@Override
-	public String store(MultipartFile file) {
+	public String storeSingleFile(MultipartFile file) {
 	    try {
-	        if (file.isEmpty()) {
-	            throw new StorageException("Failed to store empty file.");
+	        if (file == null || file.isEmpty()) {
+	            throw new StorageException("Cannot store an empty file.");
 	        }
 
 	        // Generate a unique file name using System.currentTimeMillis() + original file name
@@ -73,6 +75,22 @@ public class FileSystemStorageService implements StorageService {
 	        throw new StorageException("Failed to store file.", e);
 	    }
 	}
+	
+	@Override
+	public List<String> storeManyFiles(List<MultipartFile> files) {
+	    List<String> storedFilePaths = new ArrayList<>();
+	    for (MultipartFile file : files) {
+	        if (file != null && !file.isEmpty()) { 
+	            // Reuse storeSingleFile to handle each file
+	            String storedFilePath = storeSingleFile(file);
+	            storedFilePaths.add(storedFilePath);
+	        } else {
+	            // Handle empty or null files (optional)
+	            storedFilePaths.add("Invalid file or empty upload");
+	        }
+	    }
+	    return storedFilePaths;
+	}	
 
 
 	@Override
@@ -108,15 +126,24 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	@Override
-	public boolean delete(String filename) {
+	public void delete(String filename) {
 		try {
 			Path file = rootLocation.resolve(filename);
-			return Files.deleteIfExists(file);
+			Files.deleteIfExists(file);
 		} catch (IOException e) {
 			throw new StorageException("Failed to delete file.", e);
 		}
 	}
 
+	@Override
+	public void deleteAll(List<String> filenames) {
+	    if (filenames != null && !filenames.isEmpty()) {
+	        for (String filename : filenames) {
+	            delete(filename);
+	        }
+	    }
+	}
+	
 	@Override
 	public void deleteAll() {
 		FileSystemUtils.deleteRecursively(rootLocation.toFile());

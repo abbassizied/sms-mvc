@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Form</title>
+</head>
+<body>
+    <div th:fragment="productForm(action, buttonLabel)">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-validation">
+                                <form class="form-valide" 
+                                      th:action="@{${action} == 'add' ? '/products/add' : '/products/update/' + ${productForm.id}}"
+                                      th:object="${productForm}" 
+                                      enctype="multipart/form-data" 
+                                      method="post">
+
+                                    <!-- Hidden field for ID (used for updates) -->
+                                    <input type="hidden" th:field="*{id}" />
+
+
+
+	<div th:replace="~{fragments/inputField :: input(
+		field='name',
+		type='text',
+		label=${#messages.msg('product.name.label')},
+		placeholder=${#messages.msg('product.name.placeholder')}
+		)}"								
+	></div>
+
+
+	<div th:replace="~{fragments/fileInputField :: fileInput(
+	    field='mainImage', 
+	    label=${#messages.msg('product.mainImage.label')},
+		placeholder=${#messages.msg('product.mainImage.placeholder')},
+		multiple=false
+		)}" 
+	></div>	
+
+
+    <div th:replace="~{fragments/textareaField :: textarea(
+	    field='description', 
+		label=${#messages.msg('product.description.label')},
+		placeholder=${#messages.msg('product.description.placeholder')} 
+		)}"
+	></div>
+
+
+	<div th:replace="~{fragments/inputField :: input(
+		field='price',
+		type='number',
+		label=${#messages.msg('product.price.label')},
+		placeholder=${#messages.msg('product.price.placeholder')} 
+		)}"								
+	></div>
+
+
+	<div th:replace="~{fragments/inputField :: input(
+		field='quantity',
+		type='number',
+		label=${#messages.msg('product.quantity.label')},
+		placeholder=${#messages.msg('product.quantity.placeholder')} 
+		)}"								
+	></div>
+
+
+	<div th:replace="~{fragments/inputField :: input(
+		field='reorderLevel',
+		type='number',
+		label=${#messages.msg('product.reorderLevel.label')},
+		placeholder=${#messages.msg('product.reorderLevel.placeholder')} 
+		)}"								
+	></div>
+
+
+
+    <div th:replace="~{fragments/selectField :: select( 
+    	field = 'supplier', 
+    	label =${#messages.msg('product.supplier.label')},
+    	items = ${suppliers}, 
+    	multiple=false
+    	 )}" 
+    ></div>	
+
+ 
+
+	<div th:replace="~{fragments/fileInputField :: fileInput(
+	    field='images', 
+	    label=${#messages.msg('product.images.label')},
+		placeholder=${#messages.msg('product.images.placeholder')},
+		multiple=true 
+		)}" 
+	></div>	
+
+
+
+
+
+
+                                    <!-- Submit Button -->
+                                    <div class="form-group row">
+                                        <div class="col-md-8 ml-auto">
+                                            <button type="submit" class="btn btn-primary" th:text="${buttonLabel}">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

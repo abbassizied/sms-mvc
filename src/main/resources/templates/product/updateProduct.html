@@ -10,7 +10,11 @@
 
 
 
-
+		<div th:replace="~{product/productForm :: productForm(
+			action='update', 
+			buttonLabel=${#messages.msg('label.update')}
+			)}">
+		</div>
 
 		
 	

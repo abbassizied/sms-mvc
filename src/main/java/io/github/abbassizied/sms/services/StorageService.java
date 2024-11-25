@@ -4,12 +4,15 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.stream.Stream;
 
 public interface StorageService {
 	 public void init();
 
-	 public String store(MultipartFile file);
+	 public String storeSingleFile(MultipartFile file);
+	 
+	 public List<String> storeManyFiles(List<MultipartFile> files);
 
 	 public Stream<Path> loadAll();
 
@@ -17,7 +20,9 @@ public interface StorageService {
 
 	 public Resource loadAsResource(String filename);
 	 
-	 public boolean delete(String filename);
+	 public void delete(String filename);
+	 
+	 public void deleteAll(List<String> filenames);
 
 	 public void deleteAll();
 }
