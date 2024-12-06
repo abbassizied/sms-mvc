@@ -1,6 +1,6 @@
-package com.sip.ams.repositories; 
+package io.github.abbassizied.sms.repositories; 
 
-import com.sip.ams.entities.Role;
+import io.github.abbassizied.sms.entities.Role;
 
 import java.util.Optional;
 

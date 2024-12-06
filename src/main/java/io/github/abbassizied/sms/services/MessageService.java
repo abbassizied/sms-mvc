@@ -1,9 +1,9 @@
-package com.sip.ams.services;
+package io.github.abbassizied.sms.services;
 
-import com.sip.ams.entities.Message;
-import com.sip.ams.entities.User;
-import com.sip.ams.enums.MessageType;
-import com.sip.ams.repositories.MessageRepository;
+import io.github.abbassizied.sms.entities.Message;
+import io.github.abbassizied.sms.entities.User;
+import io.github.abbassizied.sms.enums.MessageType;
+import io.github.abbassizied.sms.repositories.MessageRepository;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
-package com.sip.ams.services;
+package io.github.abbassizied.sms.services;
 
-import com.sip.ams.entities.Role;
-import com.sip.ams.repositories.RoleRepository;
-import com.sip.ams.repositories.UserRepository;
+import io.github.abbassizied.sms.entities.Role;
+import io.github.abbassizied.sms.repositories.RoleRepository;
+import io.github.abbassizied.sms.repositories.UserRepository;
 
 import org.springframework.stereotype.Service;
 

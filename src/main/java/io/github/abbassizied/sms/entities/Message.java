@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import io.github.abbassizied.sms.enums.MessageType;
 
 @Entity
+@Table(name = "messages")
 public class Message {
 
 	@Id

@@ -1,7 +1,7 @@
-package com.sip.ams.repositories;
+package io.github.abbassizied.sms.repositories;
 
-import com.sip.ams.entities.Role;
-import com.sip.ams.entities.User;
+import io.github.abbassizied.sms.entities.Role;
+import io.github.abbassizied.sms.entities.User;
 
 import jakarta.transaction.Transactional;
 

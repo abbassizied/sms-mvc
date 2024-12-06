@@ -8,6 +8,86 @@
 <body>
 	<section layout:fragment="content">
 		<!-- User Management Content -->
+		
+		<div th:replace="~{fragments/alert :: alert}"></div>
+		
+		
+		
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="active-member">
+                    <h1>User List</h1>
+                    <p>
+                        <a th:href="@{'/users/add'}" class="btn btn-primary btn-sm btn-rounded">
+                            <i class="fa fa-plus"></i> Add New User
+                        </a>
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-xs mb-0">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th th:text="#{user.firstName.label}">First Name</th>
+                                    <th th:text="#{user.lastName.label}">Last Name</th>
+                                    <th th:text="#{user.email.label}">Email</th>
+                                    <th th:text="#{user.active.label}">Active</th>
+                                    <th th:text="#{label.actions}">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="user : ${users}">
+                                    <td th:text="${user.id}"></td>
+                                    <td th:text="${user.firstName}"></td>
+                                    <td th:text="${user.lastName}"></td>
+                                    <td th:text="${user.email}"></td>
+                                    <td>
+                                        <span th:class="${user.active} ? 'badge badge-success' : 'badge badge-danger'" 
+                                              th:text="${user.active} ? #{label.active} : #{label.inactive}">
+                                            Active Status
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/users/show/{id}(id=${user.id})}" 
+                                           class="btn btn-sm btn-rounded btn-primary">
+                                            <i class="fa fa-eye"></i>
+                                            <span th:text="#{label.view}"> View</span>
+                                        </a>
+                                        <a th:href="@{/users/edit/{id}(id=${user.id})}" 
+                                           class="btn btn-sm btn-rounded btn-warning">
+                                            <i class="fa fa-pencil-square-o"></i>
+                                            <span th:text="#{label.edit}"> Edit</span>
+                                        </a>
+                                        <a th:href="@{/users/delete/{id}(id=${user.id})}" 
+                                           class="btn btn-sm btn-rounded btn-danger" 
+                                           th:onclick="'return confirm(' + '\'' + #{alert.confirmDelete} + '\'' + ');'">
+                                            <i class="fa fa-trash-o"></i>
+                                            <span th:text="#{label.delete}"> Delete</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(users)}">
+                                    <td colspan="6" class="text-center" th:text="#{label.list.empty}">
+                                        No users found.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+		
+		
+		
+		
+		
+		
+		
+		
 	</section>
 </body>
 </html>

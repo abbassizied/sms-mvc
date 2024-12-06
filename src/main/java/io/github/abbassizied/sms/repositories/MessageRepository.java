@@ -1,12 +1,12 @@
-package com.sip.ams.repositories;
+package io.github.abbassizied.sms.repositories;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.*;
 
-import com.sip.ams.entities.Message;
-import com.sip.ams.entities.User;
-import com.sip.ams.enums.MessageType;
+import io.github.abbassizied.sms.entities.Message;
+import io.github.abbassizied.sms.entities.User;
+import io.github.abbassizied.sms.enums.MessageType;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
 	

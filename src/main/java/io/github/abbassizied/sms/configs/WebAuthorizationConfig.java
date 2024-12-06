@@ -15,12 +15,11 @@ public class WebAuthorizationConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(requests -> requests
-            	.requestMatchers("/login", "/register").permitAll() 
-            	.requestMatchers("/home").authenticated() // Allow authenticated users
-            	.requestMatchers("/roles/**").hasAnyAuthority("ROLE_SUPERADMIN")
-                .requestMatchers("/users/update-password").authenticated() // Ensure this is correct
-                .requestMatchers("/profile/change-password").authenticated() // Allow access to change password
-            	.requestMatchers("/users/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SUPERADMIN")
+            	.requestMatchers("/login", "/register","/","/about","contact").permitAll() 
+            	.requestMatchers("/dashboard/**").authenticated() // Allow authenticated users
+            	.requestMatchers("/users/**", "/roles/**").hasAnyAuthority("ROLE_SUPERADMIN")
+                .requestMatchers("/users/update-password").authenticated() // Ensure this is correct ??????????
+                .requestMatchers("/profile/change-password").authenticated() // Allow access to change password ?????????? 
             	.anyRequest().authenticated() // All other pages require authentication 
             )
             .formLogin(formLogin -> formLogin
@@ -39,6 +38,7 @@ public class WebAuthorizationConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() throws Exception {
-        return (web) -> web.ignoring().requestMatchers("/css/**", "/images/**");
+        return (web) -> web.ignoring().requestMatchers("/**");
     }
+
 }

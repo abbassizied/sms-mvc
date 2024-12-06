@@ -1,7 +1,7 @@
-package com.sip.ams.services;
+package io.github.abbassizied.sms.services;
 
-import com.sip.ams.entities.User;
-import com.sip.ams.repositories.UserRepository;
+import io.github.abbassizied.sms.entities.User;
+import io.github.abbassizied.sms.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
