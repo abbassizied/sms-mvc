@@ -7,7 +7,14 @@
 </head>
 <body>
 	<section layout:fragment="content">
-		<!-- Role Management Content -->
+		<!-- Add Role Content -->
+		
+		<div th:replace="~{role/roleForm :: roleForm(
+			action='add', 
+			buttonLabel=${#messages.msg('label.create')}
+			)}">
+		</div>		
+		
 	</section>
 </body>
 </html>

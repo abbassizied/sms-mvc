@@ -3,11 +3,73 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{fragments/layout}">
 <head>
-<title th:text="#{role.list}">Role Management</title>
+<title th:text="#{role.list}">Page Title</title>
 </head>
 <body>
 	<section layout:fragment="content">
 		<!-- Role Management Content -->
+		
+        <div th:replace="~{fragments/alert :: alert}"></div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="active-member">
+                            <h1>Role List</h1>
+                            <p>
+                                <a th:href="@{'/roles/add'}" class="btn btn-primary btn-sm btn-rounded">
+                                    <i class="fa fa-plus"></i> Add New Role
+                                </a>
+                            </p>
+                            <div class="table-responsive">
+                                <table class="table table-xs mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th th:text="#{role.name.label}">Name</th>
+                                            <th th:text="#{label.actions}">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="role : ${roles}">
+                                            <td th:text="${role.id}"></td>
+                                            <td th:text="${role.name}"></td> 
+                                            <td>
+                                                <a th:href="@{/roles/show/{id}(id=${role.id})}"
+                                                   class="btn btn-sm btn-rounded btn-primary">
+                                                    <i class="fa fa-eye"></i>
+                                                    <span th:text="#{label.view}"> View</span>
+                                                </a>
+                                                <a th:href="@{/roles/edit/{id}(id=${role.id})}"
+                                                   class="btn btn-sm btn-rounded btn-warning">
+                                                    <i class="fa fa-pencil-square-o"></i>
+                                                    <span th:text="#{label.update}"> Edit</span>
+                                                </a>
+                                                <a th:href="@{/roles/delete/{id}(id=${role.id})}"
+                                                   class="btn btn-sm btn-rounded btn-danger"
+                                                   th:onclick="'return confirm(' + '\'' + #{alert.confirmDelete} + '\'' + ');'">
+                                                    <i class="fa fa-trash-o"></i>
+                                                    <span th:text="#{label.delete}"> Delete</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr th:if="${#lists.isEmpty(roles)}">
+                                            <td colspan="4" class="text-center" th:text="#{label.list.empty}">
+                                                No roles found.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>		
+		
+		
+		
 	</section>
 </body>
 </html>

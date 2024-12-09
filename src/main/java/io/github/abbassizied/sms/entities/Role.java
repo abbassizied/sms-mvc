@@ -1,20 +1,22 @@
 package io.github.abbassizied.sms.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.*; 
+import java.util.*; 
 
 @Entity
 @Table(name = "roles")
-public class Role extends BaseEntity {
-
-	@Id
-	@Column(nullable = false, updatable = false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-
+public class Role extends BaseEntity { 
+ 
 	@Column(nullable = false, unique = true)
 	private String name;
 
-	// Constructors
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "roles_privileges",
+	    joinColumns = @JoinColumn(name = "role_id"), 
+	    inverseJoinColumns = @JoinColumn(name = "privilege_id"))
+	private Set<Privilege> privileges = new HashSet<>();
+ 
+	// Constructors, getters, and setters
 	public Role() {
 		super();
 	}
@@ -23,16 +25,7 @@ public class Role extends BaseEntity {
 		super();
 		this.name = name;
 	}
-
-	// Getters and setters
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
+ 
 	public String getName() {
 		return name;
 	}
@@ -41,8 +34,17 @@ public class Role extends BaseEntity {
 		this.name = name;
 	}
 
+	public Set<Privilege> getPrivileges() {
+		return privileges;
+	}
+
+	public void setPrivileges(Set<Privilege> privileges) {
+		this.privileges = privileges;
+	}
+
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", name=" + name + "]";
+		return "Role [id=" + id + ", name=" + name + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
 	}
+
 }

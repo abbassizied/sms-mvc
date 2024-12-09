@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+</head>
+<body>
+    <div th:fragment="roleForm(action, buttonLabel)">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                        
+                            <br />
+                            <a th:href="@{/roles/list}" class="btn btn-secondary">Back to list</a>
+                            <br /> <br />
+                         
+                            <div class="form-validation">
+                                <form class="form-valide" 
+                                      th:action="@{${action} == 'add' ? '/roles/add' : '/roles/update'}"
+                                      th:object="${roleForm}" 
+                                      method="post">
+
+                                    <!-- Hidden field for ID (used for updates) -->
+                                    <input type="hidden" th:field="*{id}" />
+
+
+									<div th:replace="~{fragments/inputField :: input(
+										field='name',
+										type='text',
+										label=${#messages.msg('role.name.label')},
+										placeholder=${#messages.msg('role.name.placeholder')} 
+										)}"								
+									></div>
+
+
+
+								    <div th:replace="~{fragments/selectField :: select( 
+								    	field = 'privileges', 
+								    	label = 'Privileges', 
+								    	items = ${privileges}, 
+								    	multiple=true 
+								    	)}" >
+								    </div>
+
+
+
+                                    <!-- Submit Button -->
+                                    <div class="form-group row">
+                                        <div class="col-md-8 ml-auto">
+                                            <button type="submit" class="btn btn-primary" th:text="${buttonLabel}">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

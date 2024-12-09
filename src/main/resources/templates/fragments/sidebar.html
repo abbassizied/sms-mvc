@@ -14,13 +14,20 @@
 	<div class="nk-nav-scroll">
 		<ul class="metismenu" id="menu">
 		
+		<!-- Home -->
+			<li class="mega-menu mega-menu-sm">
+				<a th:href="@{/}" aria-expanded="false">
+					<i class="fa fa-shopping-bag menu-icon" aria-hidden="true"></i><span class="nav-text" th:text="#{app.label.shop}">Shop</span>
+				</a>
+			</li>		
+		
 		<!-- Dashboard Section -->
 			<li class="nav-label" th:text="#{app.label.dashboard}">Dashboard</li>
 
 			<!-- Dashboard -->
 			<li class="mega-menu mega-menu-sm">
 				<a th:href="@{/dashboard}" aria-expanded="false">
-					<i class="fa fa-home menu-icon" aria-hidden="true"></i><span class="nav-text" th:text="#{app.label.dashboard}">Dashboard</span>
+					<i class="fa fa-tachometer menu-icon" aria-hidden="true"></i><span class="nav-text" th:text="#{app.label.dashboard}">Dashboard</span>
 				</a>
 			</li>
 
@@ -66,7 +73,7 @@
 			<!-- Sale Management -->
 			<li class="mega-menu mega-menu-sm">
 				<a class="has-arrow" href="javascript:void()" aria-expanded="false">
-					<i class="fa fa-shopping-cart menu-icon"></i><span class="nav-text" th:text="#{order.title}">Orders</span>
+					<i class="fa fa-money menu-icon"></i><span class="nav-text" th:text="#{order.title}">Orders</span>
 				</a>
 				<ul aria-expanded="false">
 					<li><a th:href="@{/orders}" th:text="#{order.list}">Order List</a></li>
@@ -134,8 +141,8 @@
 			<!-- Log Out -->
 			<li class="mega-menu mega-menu-sm">
 			    <!-- Dynamic logout text from messages.properties -->
-			    <a href="javascript:void()" aria-expanded="false">
-			        <i class="fa fa-tasks menu-icon" aria-hidden="true"></i>
+			    <a href="/logout" aria-expanded="false">
+			        <i class="icon-key" aria-hidden="true"></i>
 			        <span class="nav-text" th:text="#{user.logout}">Log Out</span>
 			    </a>
 			</li>	

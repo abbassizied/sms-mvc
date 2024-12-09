@@ -3,11 +3,42 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{fragments/layout}">
 <head>
-<title th:text="#{role.list}">Role Management</title>
+	<title th:text="#{role.details}">Page Title</title>
 </head>
 <body>
 	<section layout:fragment="content">
 		<!-- Role Management Content -->
+		
+				
+				
+		<div class="row">
+		    <div class="col-md-12">
+		        <div class="card">
+		            <div class="card-body">
+                            <br />
+                            <a th:href="@{/roles/list}" class="btn btn-secondary">Back to list</a>
+                            <br /> <br />		            
+		            
+		            
+					    <h1 th:text="#{role.details}"></h1>
+					    
+					    <p><strong>Id: </strong> <span th:text="${role.id}"></span></p>
+				         
+					    <p><strong>Name: </strong> <span th:text="${role.name}"></span></p>
+				         			 
+				        <h3 th:text="#{role.privileges.label}"></h3>
+				        
+			            	<ul class="list-unstyled mb-0">
+	                        	<li th:each="privilege : ${role.privileges}" th:text="${privilege.name}"></li>
+	                        </ul>				
+															
+					</div>
+				</div>	
+			</div>		
+		</div>		
+		
+		
+		
 	</section>
 </body>
 </html>

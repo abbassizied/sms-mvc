@@ -1,55 +1,78 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{frontoffice/main_layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{frontoffice/main_layout}">
 <head>
-<title>User Registration</title>
+    <title>User Registration</title>
+    <!-- Include Bootstrap CSS (ensure it's linked in your main layout) -->
 </head>
 <body>
 
+<th:block layout:fragment="content">
+    <!-- Register Section -->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h3 class="text-center mb-4">Register</h3>
 
-	<th:block layout:fragment="content">
-		<!-- Content go here -->
-		<!-- Register Section-->
-		<section class="py-5">
-			<div class="container px-4 px-lg-5">
-				<div class="row justify-content-center">
-					<div class="col-lg-6">
-						<div class="card shadow-sm">
-							<div class="card-body">
-								<h3 class="text-center">Register</h3>
-								<form>
-									<div class="mb-3">
-										<label for="name" class="form-label">Full Name</label> <input
-											type="text" class="form-control" id="name"
-											placeholder="Enter your full name">
-									</div>
-									<div class="mb-3">
-										<label for="email" class="form-label">Email address</label> <input
-											type="email" class="form-control" id="email"
-											placeholder="Enter your email">
-									</div>
-									<div class="mb-3">
-										<label for="password" class="form-label">Password</label> <input
-											type="password" class="form-control" id="password"
-											placeholder="Create a password">
-									</div>
-									<button type="submit" class="btn btn-primary w-100">Register</button>
-								</form>
-								<div class="text-center mt-3">
-									<p class="small">
-										Already have an account? <a th:href="@{/login}">Login here</a>
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+                            <form th:action="@{/register}" th:object="${userForm}" method="POST" novalidate>
+                                
+                                <!-- First Name Field -->
+                                <div class="mb-3">
+                                    <label for="firstName" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required>
+                                    <div th:if="${#fields.hasErrors('firstName')}" class="text-danger small">
+                                        <span th:errors="*{firstName}"></span>
+                                    </div>
+                                </div>
 
-	</th:block>
+                                <!-- Last Name Field -->
+                                <div class="mb-3">
+                                    <label for="lastName" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required>
+                                    <div th:if="${#fields.hasErrors('lastName')}" class="text-danger small">
+                                        <span th:errors="*{lastName}"></span>
+                                    </div>
+                                </div>
 
+                                <!-- Email Field -->
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" th:field="*{email}" required>
+                                    <div th:if="${#fields.hasErrors('email')}" class="text-danger small">
+                                        <span th:errors="*{email}"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Password Field -->
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" th:field="*{password}" required>
+                                    <div th:if="${#fields.hasErrors('password')}" class="text-danger small">
+                                        <span th:errors="*{password}"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <button type="submit" class="btn btn-primary w-100">Register</button>
+                            </form>
+
+                            <!-- Login Link -->
+                            <div class="text-center mt-3">
+                                <p class="small">
+                                    Already have an account? <a th:href="@{/login}">Login here</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</th:block>
 
 </body>
 </html>

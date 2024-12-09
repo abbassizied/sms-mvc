@@ -6,11 +6,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "purchases")
-public class Purchase extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Purchase extends BaseEntity { 
+	
     @Column(nullable = false)
     private LocalDate purchaseDate;
 
@@ -23,6 +20,11 @@ public class Purchase extends BaseEntity {
 
     @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PurchaseItem> purchaseItems;
+
+    // Default constructor
+	public Purchase() {
+		super();
+	}
 
     // Getters and setters
 }

@@ -10,6 +10,83 @@
 		<!-- User Profile Content -->
 		
 		
+
+<div th:replace="~{fragments/alert :: alert}"></div>
+
+
+
+<div class="row">
+
+
+
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <!-- You can add content here for the first card -->
+                
+                
+                <!-- Profile Image Section -->
+                <div class="media align-items-center mb-4">
+                    <!-- Check if photoUrl exists -->
+                    <div th:if="${currentUser.getPhotoUrl() != null}">
+                        <img class="mr-3" th:src="@{'/uploads/' + ${currentUser.getPhotoUrl()}}" width="80" height="80" alt="">
+                    </div>
+                    <!-- Default image if photoUrl is null -->
+                    <div th:if="${currentUser.getPhotoUrl() == null}">
+                        <img class="mr-3" th:src="@{'/shared/img/profile-icon.png'}" width="80" height="80" alt="">
+                    </div>
+                    
+                    <div class="media-body">
+                        <h3 class="mb-0" th:text="${currentUser.getFirstName() + ' ' + currentUser.getLastName()}">User Name</h3>
+                    </div>
+                </div>
+                 
+                
+                <!-- Contact Info Section -->
+                <ul class="card-profile__info">
+					<!-- User Info Section --> 
+					<li class="mb-1">
+						<strong class="text-dark mr-4">First Name:</strong> <span th:text="${currentUser.getFirstName()}"></span>
+					</li>
+					<li class="mb-1">
+						<strong class="text-dark mr-4">Last Name:</strong> <span th:text="${currentUser.getLastName()}"></span>
+					</li>
+					<li class="mb-1">
+						<strong class="text-dark mr-4">Email:</strong> <span th:text="${currentUser.getEmail()}"></span>
+					</li> 
+                </ul>
+                 
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+               <ul>
+                   <li><a th:href="@{/profile/update-profile}">Update Profile</a></li>
+                   <li><a th:href="@{/profile/update-password}">Change Password</a></li>
+               </ul>  
+            </div>
+        </div>
+    </div>
+    
+    
+</div>
+
+
+
+
+
+
+
+
+
 		
 		
 	</section>

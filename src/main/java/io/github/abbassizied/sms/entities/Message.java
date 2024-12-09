@@ -8,12 +8,8 @@ import io.github.abbassizied.sms.enums.MessageType;
 
 @Entity
 @Table(name = "messages")
-public class Message {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
+public class Message extends BaseEntity{
+ 
 	@Column(name = "message_content")
 	private String messageContent;
 	private ZonedDateTime createdAt;
@@ -39,6 +35,7 @@ public class Message {
 	// Default constructor
 	public Message() {
 		// No-arg constructor
+		super();
 	}
 
 	// Constructor for broadcast (public) messages
@@ -56,12 +53,7 @@ public class Message {
 		this.receiver = receiver;
 		this.createdAt = ZonedDateTime.now();
 		this.messageType = MessageType.PRIVATE_CHAT;
-	}
-
-	// Getters and Setters
-	public Long getId() {
-		return id;
-	}
+	} 
 
 	public String getMessageContent() {
 		return messageContent;
@@ -70,11 +62,7 @@ public class Message {
 	public void setMessageContent(String messageContent) {
 		this.messageContent = messageContent;
 	}
-
-	public ZonedDateTime getCreatedAt() {
-		return createdAt;
-	}
-
+  
 	public User getSender() {
 		return sender;
 	}

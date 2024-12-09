@@ -5,10 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "suppliers")
-public class Supplier extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Supplier extends BaseEntity { 
 
     @Column(nullable = false)
     private String name;
@@ -21,20 +18,12 @@ public class Supplier extends BaseEntity {
     @OneToMany(mappedBy = "supplier")
     private List<Product> products;
 
+    // Default constructor
 	public Supplier() {
 		super();
 	}
 
-    // Getters and setters	
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+    // Getters and setters	  
     public String getName() {
         return name;
     }

@@ -8,6 +8,75 @@
 <body>
 	<section layout:fragment="content">
 		<!-- User Management Content -->
+		
+		
+		
+		
+		
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title" th:text="#{user.details}">Default Tab</h1>
+                
+                <!-- Profile Image Section -->
+                <div class="media align-items-center mb-4">
+                    <!-- Check if photoUrl exists -->
+                    <div th:if="${user.photoUrl != null}">
+                        <img class="mr-3" th:src="@{'/uploads/' + ${user.photoUrl}}" width="80" height="80" alt="">
+                    </div>
+                    <!-- Default image if photoUrl is null -->
+                    <div th:if="${user.photoUrl == null}">
+                        <img class="mr-3" th:src="@{'/shared/img/profile-icon.png'}" width="80" height="80" alt="">
+                    </div>
+                    
+                    <div class="media-body">
+                        <h3 class="mb-0" th:text="${user.firstName + ' ' + user.lastName}">User Name</h3>
+                    </div>
+                </div>
+                 
+                
+                <!-- Contact Info Section -->
+                <ul class="card-profile__info">
+					<!-- User Info Section -->
+					<li class="mb-1">
+						<strong class="text-dark mr-4">ID:</strong> <span th:text="${user.id}"></span>
+					</li>
+					<li class="mb-1">
+						<strong class="text-dark mr-4">First Name:</strong> <span th:text="${user.firstName}"></span>
+					</li>
+					<li class="mb-1">
+						<strong class="text-dark mr-4">Last Name:</strong> <span th:text="${user.lastName}"></span>
+					</li>
+					<li class="mb-1">
+						<strong class="text-dark mr-4">Email:</strong> <span th:text="${user.email}"></span>
+					</li>
+					<li class="mb-1">
+						<strong class="text-dark mr-4">Active:</strong> <span th:text="${user.active ? 'true' : 'false'}"></span>
+					</li>
+                </ul>
+                
+
+
+                <!-- Roles Section -->
+                <p><strong class="text-dark mr-4">Roles: </strong> 
+                    <span th:each="role, iterStat : ${user.roles}">
+                        <span th:text="${role.name}"></span>
+                        <span th:if="${!iterStat.last}">, </span> <!-- Add a comma unless it's the last role -->
+                    </span>
+                </p>                
+            </div>
+        </div>
+    </div>
+</div>		
+		
+		
+		
+		
+		
+		
+		
+		
 	</section>
 </body>
 </html>

@@ -5,10 +5,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "discounts")
-public class Discount extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Discount extends BaseEntity { 
 
     @Column(nullable = false)
     private Double discountPercentage;
@@ -19,20 +16,12 @@ public class Discount extends BaseEntity {
     @Column(nullable = false)
     private LocalDate endDate;
 
-    // Constructors
+    // Default constructor 
 	public Discount() {
 		super();
 	}
     
-    // Getters and setters
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+    // Getters and setters 
 	public Double getDiscountPercentage() {
 		return discountPercentage;
 	}

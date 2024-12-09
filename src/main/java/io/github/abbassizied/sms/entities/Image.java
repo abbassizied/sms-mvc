@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "images")
-public class Image extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Image extends BaseEntity { 
 
     @Column(nullable = false)
     private String url;
@@ -27,16 +24,8 @@ public class Image extends BaseEntity {
 		super();
 		this.url = url;
 	}
-    // Getters and setters
 	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+    // Getters and setters  
 	public String getUrl() {
 		return url;
 	}

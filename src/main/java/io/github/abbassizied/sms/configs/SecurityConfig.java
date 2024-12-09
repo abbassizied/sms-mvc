@@ -1,7 +1,5 @@
 package io.github.abbassizied.sms.configs;
 
-import javax.sql.DataSource;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,51 +9,40 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
+
+import io.github.abbassizied.sms.services.UserDetailsServiceImpl;
 
 @Configuration
 public class SecurityConfig {
 
-	// 1 - Password encoder (BCrypt)
+	// 1 - We enable the password encoder.
+    // Define the BCryptPasswordEncoder bean
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+	// 2 - We inject our implementation of the users details service.
 	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+	UserDetailsServiceImpl customUserDetailsService() {
+		return new UserDetailsServiceImpl();
 	}
 
-	// 2 - JdbcUserDetailsManager for retrieving users and authorities from the
-	// database
+	// 3 - We define an authentication provider that references our details service
 	@Bean
-	public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
-
-		String usersByUsernameQuery = "SELECT email AS username, password, active FROM users WHERE email = ?";
-
-        String authsByUserQuery = "SELECT u.email AS username, r.name AS authority " +
-                "FROM users u " +
-                "JOIN user_role ur ON u.id = ur.user_id " +
-                "JOIN roles r ON ur.role_id = r.id " +
-                "WHERE u.email = ?";
-		
-		JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-		jdbcUserDetailsManager.setUsersByUsernameQuery(usersByUsernameQuery);
-		jdbcUserDetailsManager.setAuthoritiesByUsernameQuery(authsByUserQuery);
-
-		return jdbcUserDetailsManager;
-	}
-
-	// 3 - DaoAuthenticationProvider using JdbcUserDetailsManager
-	@Bean
-	public AuthenticationProvider authenticationProvider(DataSource dataSource) {
+	AuthenticationProvider customAuthenticationProvider() {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-		authProvider.setUserDetailsService(jdbcUserDetailsManager(dataSource));
+		authProvider.setUserDetailsService(customUserDetailsService());
 		authProvider.setPasswordEncoder(passwordEncoder());
 		return authProvider;
+
 	}
 
-	// 4 - AuthenticationManager that uses the custom AuthenticationProvider
+	// 4 - Finally, we need to reference this auth provider in our configuration.
 	@Bean
-	public AuthenticationManager authenticationManager(HttpSecurity http, DataSource dataSource) throws Exception {
+	AuthenticationManager authManager(HttpSecurity http) throws Exception {
 		return http.getSharedObject(AuthenticationManagerBuilder.class)
-				.authenticationProvider(authenticationProvider(dataSource)).build();
+				.authenticationProvider(customAuthenticationProvider()).build();
 	}
 
 }

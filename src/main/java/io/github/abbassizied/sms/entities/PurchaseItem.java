@@ -4,11 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "purchase_items")
-public class PurchaseItem extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class PurchaseItem extends BaseEntity { 
     @Column(nullable = false)
     private Integer quantity;
 

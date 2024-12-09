@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 </head>
 <body>
-    <div th:fragment="supplierForm(action, buttonLabel)">
+
+
+    <div th:fragment="updateUserForm">
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-md-12">
@@ -13,58 +15,87 @@
                         <div class="card-body">
                             <div class="form-validation">
                                 <form class="form-valide" 
-                                      th:action="@{${action} == 'add' ? '/suppliers/add' : '/suppliers/update/' + ${supplierForm.id}}"
-                                      th:object="${supplierForm}" 
+                                      th:action="@{'/users/update'}"
+                                      th:object="${userForm}" 
                                       enctype="multipart/form-data" 
-                                      method="post">
+                                      method="post"> 
+
 
                                     <!-- Hidden field for ID (used for updates) -->
                                     <input type="hidden" th:field="*{id}" />
 
-                                    <!-- Company Name Input -->
-                                    <div th:replace="~{fragments/inputField :: input(
-                                        field='name',
-                                        type='text',
-                                        label=${#messages.msg('supplier.companyName.label')},
-                                        placeholder=${#messages.msg('supplier.companyName.placeholder')}
-                                    )}"></div>
+  
+								    <!-- Email Field -->
+									<div class="form-group row">
+									    <label class="col-lg-4 col-form-label" for="email">
+										    Email
+									    </label>
+									    <div class="col-lg-6">
+									        <input type="email" class="form-control" th:field="*{email}" />
+									    </div>
+									</div>	
+ 
+ 
+								    <!-- First Name Field -->
+								    <div th:replace="~{fragments/inputField :: input(
+								        field='firstName',
+								        type='text',
+								        label=${#messages.msg('user.firstName.label')},
+								        placeholder=${#messages.msg('user.firstName.placeholder')}
+								    )}"></div>
 
-                                    <!-- Logo Upload Input -->
+
+								    <!-- Last Name Field -->
+								    <div th:replace="~{fragments/inputField :: input(
+								        field='lastName',
+								        type='text',
+								        label=${#messages.msg('user.lastName.label')},
+								        placeholder=${#messages.msg('user.lastName.placeholder')}
+								    )}"></div>
+
+ 
+								
+                                    <!-- Photo Url Upload Input -->
                                     <div th:replace="~{fragments/fileInputField :: fileInput(
-                                        field='logoUrl', 
-                                        label=${#messages.msg('supplier.logoUrl.label')},
-                                        placeholder=${#messages.msg('supplier.logoUrl.placeholder')},
+                                        field='photoUrl', 
+                                        label=${#messages.msg('user.photoUrl.label')},
+                                        placeholder=${#messages.msg('user.photoUrl.placeholder')},
                                         multiple=false
-                                    )}"></div>
+                                    )}"></div>	
 
-                                    <!-- Email Input -->
-                                    <div th:replace="~{fragments/inputField :: input(
-                                        field='email',
-                                        type='email',
-                                        label=${#messages.msg('supplier.email.label')},
-                                        placeholder=${#messages.msg('supplier.email.placeholder')}
-                                    )}"></div>
 
-                                    <!-- Phone Input -->
-                                    <div th:replace="~{fragments/inputField :: input(
-                                        field='phone',
-                                        type='tel',
-                                        label=${#messages.msg('supplier.phone.label')},
-                                        placeholder=${#messages.msg('supplier.phone.placeholder')}
-                                    )}"></div>
 
-                                    <!-- Address Input -->
-                                    <div th:replace="~{fragments/inputField :: input(
-                                        field='address',
-                                        type='text',
-                                        label=${#messages.msg('supplier.address.label')},
-                                        placeholder=${#messages.msg('supplier.address.placeholder')}
-                                    )}"></div>
+                                    <!-- Active Checkbox Field -->
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label">Active</label>	
+										<div class="col-lg-6 form-check-inline">
+											<div class="form-check form-check-inline">
+											    <label class="form-check-label">
+													<input class="form-check-input" 
+													       type="checkbox" 
+														   th:field="*{active}"> Is the Account Active?
+												</label>
+											</div> 
+										</div>		
+									</div>	
 
+
+								
+								    <!-- Roles Multi-Select Field -->
+								    <div th:replace="~{fragments/selectField :: select(
+								        field='roles',
+								        label=${#messages.msg('user.roles.label')},
+								        items=${roles},
+								        multiple=true
+								    )}"></div>
+
+ 
+								
+								
                                     <!-- Submit Button -->
                                     <div class="form-group row">
                                         <div class="col-md-8 ml-auto">
-                                            <button type="submit" class="btn btn-primary" th:text="${buttonLabel}">Submit</button>
+                                            <button type="submit" class="btn btn-primary" th:text="#{label.update}">Submit</button>
                                         </div>
                                     </div>
                                 </form>

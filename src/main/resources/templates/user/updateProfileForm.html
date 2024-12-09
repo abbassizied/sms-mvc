@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+</head>
+<body>
+
+
+    <div th:fragment="updateProfileForm">
+         <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-validation">
+                                <form class="form-valide" 
+                                      th:action="@{'/profile/update-profile'}"
+                                      enctype="multipart/form-data" 
+                                      th:object="${userProfileForm}" 
+                                      method="post"> 
+
+
+                                    <!-- Hidden field for ID (used for updates) -->
+                                    <input type="hidden" th:field="*{id}" />
+
+  
+								    <!-- Email Field -->
+									<div class="form-group row">
+									    <label class="col-lg-4 col-form-label" for="email">
+										    Email
+									    </label>
+									    <div class="col-lg-6">
+									        <input type="email" class="form-control" th:field="*{email}" disabled />
+									    </div>
+									</div>	
+ 
+ 
+								    <!-- First Name Field -->
+								    <div th:replace="~{fragments/inputField :: input(
+								        field='firstName',
+								        type='text',
+								        label=${#messages.msg('user.firstName.label')},
+								        placeholder=${#messages.msg('user.firstName.placeholder')}
+								    )}"></div>
+
+
+								    <!-- Last Name Field -->
+								    <div th:replace="~{fragments/inputField :: input(
+								        field='lastName',
+								        type='text',
+								        label=${#messages.msg('user.lastName.label')},
+								        placeholder=${#messages.msg('user.lastName.placeholder')}
+								    )}"></div>
+
+ 
+								
+                                    <!-- Photo Url Upload Input -->
+                                    <div th:replace="~{fragments/fileInputField :: fileInput(
+                                        field='photoUrl', 
+                                        label=${#messages.msg('user.photoUrl.label')},
+                                        placeholder=${#messages.msg('user.photoUrl.placeholder')},
+                                        multiple=false
+                                    )}"></div>	
+
+
+								
+                                    <!-- Submit Button -->
+                                    <div class="form-group row">
+                                        <div class="col-md-8 ml-auto">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div> 
+                            
+    </div>
+</div>            
+</div> 
+</div>             
+</div> 
+</div>     
+    
+    
+    
+</body>
+</html>

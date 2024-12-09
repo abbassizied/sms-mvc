@@ -3,7 +3,6 @@ package io.github.abbassizied.sms.services;
 import io.github.abbassizied.sms.entities.User;
 import io.github.abbassizied.sms.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,11 +25,6 @@ public class UserService {
 		if (user.getRoles().isEmpty()) {
 			throw new IllegalArgumentException("At least one role must be provided");
 		}
-		
-	    if (user.getActive() == null) {
-	        user.setActive(false);
-	    }
-		
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		return userRepository.save(user);
 	}
@@ -51,20 +45,18 @@ public class UserService {
 
         // Retain the original email and password
         // These fields will NOT be updated even if they are sent in the update request
-        // existingUser.setEmail(existingUser.getEmail());  // No need to set as it already exists
-        // existingUser.setPassword(existingUser.getPassword());
 
         // Save the updated user back to the database
         return userRepository.save(existingUser); 
 	}	
 	
 
-	public User getUserById(Integer id) {
+	public User getUserById(Long id) {
 		return userRepository.findById(id)
 				.orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
 	}
 
-	public void deleteUser(Integer id) {
+	public void deleteUser(Long id) {
 		userRepository.deleteById(id);
 	}
 
@@ -84,19 +76,14 @@ public class UserService {
 				.orElseThrow(() -> new EntityNotFoundException("User with email: " + email + " not found!"));
 	}
 
-	@Transactional
-	public void updatePassword(String email, String newPassword) {
-		// Validate the user exists, and fetch the user if needed
-		User user = findByEmail(email);
-		if (user != null) {
-			// Encode the new password
-			String encodedPassword = passwordEncoder.encode(newPassword);
 
-			// Call the repository method to update the password
-			userRepository.updatePasswordByEmail(email, encodedPassword);
-		} else {
-			throw new EntityNotFoundException("User not found with email: " + email);
-		}
+	public void updatePassword(User user) {
+		// Validate the user exists, and fetch the user if needed
+		User existingUser = getUserById(user.getId());
+		// Encode and Update the new password 
+		existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+		// Call the repository method to update the password
+		userRepository.save(existingUser);
 	}
 
 }

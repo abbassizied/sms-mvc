@@ -24,7 +24,7 @@ public class RoleService {
 		return roleRepository.existsByNameIgnoreCase(roleName);
 	}
 
-	public Role getRoleById(Integer roleId) {
+	public Role getRoleById(Long roleId) {
 
 		return this.roleRepository.findById(roleId)
 				.orElseThrow(() -> new IllegalArgumentException("Role not found with id: " + roleId));
@@ -35,15 +35,10 @@ public class RoleService {
 	}
 
 	public Set<Role> getAllRoles() {
-	    Set<Role> roles = new HashSet<>(this.roleRepository.findAll());
-	    roles.forEach(role -> {
-	        // Log role details to check for anomalies
-	        System.out.println("Role: " + role);
-	    });
-	    return roles;
+		return new HashSet<>(this.roleRepository.findAll());
 	}
 
-	public void deleteRole(Integer id) {
+	public void deleteRole(Long id) {
 		Role role = getRoleById(id);
 		this.roleRepository.delete(role);
 		// remove many-to-many relations at owning side
