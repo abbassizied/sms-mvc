@@ -1,0 +1,43 @@
+<!-- How to use the alert fragment ?
+ 
+    <div th:replace="~{frontoffice/alert :: alert('success', 'Operation was successful!')}"></div>
+
+    <div th:replace="~{frontoffice/alert :: alert('danger', 'Something went wrong!')}"></div>
+
+-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+</head>
+<body>
+
+
+
+
+    <!-- Alert Fragment -->
+    <th:block th:fragment="alert" class="row justify-content-center">
+        <div th:if="${alert != null}">
+
+			<!-- Success Alert -->
+				<div th:if="${alert.type == 'success'}" class="alert alert-success alert-dismissible fade show" role="alert">
+					<span th:text="${alert.message}">Operation was successful!</span>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+					
+			<!-- Danger Alert -->
+				<div th:if="${alert.type == 'danger'}" class="alert alert-danger alert-dismissible fade show" role="alert">
+					<span th:text="${alert.message}">Something went wrong!</span>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>                   
+        
+        </div> 
+    </th:block>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/layout}">
+<head>
+	<title>Public Chat</title> 
+    <!-- WebSocket related dependencies -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script> 
+	
+    <!-- public-chat --> 	
+	<link rel="stylesheet" th:href="@{/shared/css/public-chat.css}" />	 
+	<script type="text/javascript" th:src="@{/shared/js/public-chat.js}"></script>	
+</head>
+<body>
+	<section layout:fragment="content">
+		<!-- Public Chat Content -->
+		
+		
+		
+		
+		
+		
+		
+		
+
+<!--***********************************************************************************************
+***************************************************************************************************
+***************************************************************************************************
+***************************************************************************************************
+***************************************************************************************************
+*******************************************-->
+
+
+ 
+    <div class="row">
+        <!-- User List -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Users</h5>
+                    <div class="user-list">
+                    
+                        <!-- Iterate over the users passed from the controller -->
+                        <div class="media mb-3 align-items-center" th:each="user : ${users}" th:attr="data-user-id=${user.id}"> 
+                            <!-- Check if photoUrl exists -->
+                            <div th:if="${user.getPhotoUrl() != null}">
+                            	<img th:src="@{'/uploads/' + ${user.getPhotoUrl()}}"
+                            	     class="rounded-circle mr-3" width="40" height="40" alt="Avatar">
+                            </div>    
+                            <!-- Default image if photoUrl is null -->
+                            <div th:if="${user.getPhotoUrl() == null}">
+                            	<img th:src="@{'/shared/img/profile-icon.png'}" 
+                            	     class="rounded-circle mr-3" width="40" height="40" alt="Avatar">
+                            </div>
+                             
+                            <div class="media-body">
+                                <!-- Use th:href to handle the onclick dynamically, passing the user ID -->
+						        <a  class="mt-0" th:href="@{/private-chat/{id}(id=${user.id})}" th:text="${user.firstName} + ' ' + ${user.lastName}">
+						         John Doe
+						        </a> 
+						        <!-- Conditionally show Online or Offline status -->
+<!--						        
+								<p class="text-muted mb-0">
+									<i class="text-success fa fa-circle"></i> Online
+								</p> 
+								<p class="text-muted mb-0">
+									<i class="text-danger fa fa-circle"></i> Offline
+								</p>
+ -->
+ 								
+                            </div>
+                        </div>
+						  
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Public Chat Messages -->
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Public Chat</h5>
+                    <div id="conversation" class="chat-box mb-3">
+                    
+
+	  
+<!-- Public messages go here -->  
+<th:block th:each="message : ${messages}">
+    <!-- Check if the message sender is the current authenticated user -->
+    <th:block th:if="${message.sender.email == username}">
+        <!-- My Message -->
+        <div class="media mb-3 flex-row-reverse">
+            <img th:src="${message.sender.photoUrl != null} ? @{/uploads/{photo}(photo=${message.sender.photoUrl})} : @{/shared/img/profile-icon.png}"
+                 class="rounded-circle ml-3" width="40" height="40" alt="Avatar">
+            <div class="media-body chat-message-me text-right">
+                <h6 class="mt-0">
+                    You 
+                    <small class="text-muted ml-2" th:text="${#temporals.format(message.updatedAt, 'yyyy-MM-dd HH:mm:ss')}">10:05 AM</small>
+                </h6>
+                <p th:text="${message.messageContent}">Sure, let's chat!</p>
+            </div>
+        </div>    
+    </th:block>
+
+    <!-- For other users' messages -->
+    <th:block th:unless="${message.sender.email == username}">
+        <!-- Other User's Message -->
+        <div class="media mb-3">
+            <img th:src="${message.sender.photoUrl != null} ? @{/uploads/{photo}(photo=${message.sender.photoUrl})} : @{/shared/img/profile-icon.png}"
+                 class="rounded-circle mr-3" width="40" height="40" alt="Avatar">
+            <div class="media-body chat-message-other">
+                <h6 class="mt-0">
+                    <span th:text="${message.sender.firstName + ' ' + message.sender.lastName}">John Doe</span>
+                    <small class="text-muted ml-2" th:text="${#temporals.format(message.updatedAt, 'yyyy-MM-dd HH:mm:ss')}">10:00 AM</small>
+                </h6>
+                <p th:text="${message.messageContent}">Hey, how's it going? Anyone up for a chat?</p>
+            </div>
+        </div>    
+    </th:block>
+</th:block>
+                  
+                    
+                    
+                     
+                    </div>
+                    
+                    <!-- message form -->
+                    <form> 
+	                    <!-- Message Input -->
+	                    <div class="form-group">
+	                        <textarea class="form-control" rows="2" id="message" name="message" placeholder="Chat with us!"></textarea>
+	                    </div>
+	                    <div class="text-right">
+	                        <button class="btn btn-primary px-4" type="button" onclick="sendPublicMessage()">Send</button>
+	                    </div>
+	                </form>
+	                
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+
+
+
+<!--***********************************************************************************************
+***************************************************************************************************
+***************************************************************************************************
+***************************************************************************************************
+***************************************************************************************************
+*******************************************-->	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</section>
+</body>
+</html>

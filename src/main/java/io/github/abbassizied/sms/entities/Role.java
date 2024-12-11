@@ -44,7 +44,7 @@ public class Role extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", name=" + name + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
-	}
-
+		return "Role [name=" + name + ", privileges=" + privileges + ", id=" + id + ", createdAt=" + createdAt
+				+ ", updatedAt=" + updatedAt + "]";
+	} 
 }

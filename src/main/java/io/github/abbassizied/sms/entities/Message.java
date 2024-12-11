@@ -1,8 +1,6 @@
 package io.github.abbassizied.sms.entities;
 
-import jakarta.persistence.*;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import jakarta.persistence.*; 
 
 import io.github.abbassizied.sms.enums.MessageType;
 
@@ -12,7 +10,6 @@ public class Message extends BaseEntity{
  
 	@Column(name = "message_content")
 	private String messageContent;
-	private ZonedDateTime createdAt;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "message_type")	
@@ -41,8 +38,7 @@ public class Message extends BaseEntity{
 	// Constructor for broadcast (public) messages
 	public Message(User sender, String messageContent) {
 		this.sender = sender;
-		this.messageContent = messageContent;
-		this.createdAt = ZonedDateTime.now();
+		this.messageContent = messageContent; 
 		this.messageType = MessageType.PUBLIC_CHAT;
 	}
 
@@ -50,8 +46,7 @@ public class Message extends BaseEntity{
 	public Message(User sender, String messageContent, User receiver) {
 		this.sender = sender;
 		this.messageContent = messageContent;
-		this.receiver = receiver;
-		this.createdAt = ZonedDateTime.now();
+		this.receiver = receiver; 
 		this.messageType = MessageType.PRIVATE_CHAT;
 	} 
 
@@ -87,18 +82,11 @@ public class Message extends BaseEntity{
 		this.messageType = messageType;
 	}
 
-	// Format createdAt to user’s local time zone
-	public String getFormattedTimestamp(String userTimeZone) {
-		return createdAt.withZoneSameInstant(java.time.ZoneId.of(userTimeZone))
-				.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z"));
-	}
-
+	 
 	// toString for easier logging/debugging
 	@Override
 	public String toString() {
-		return "ChatMessage{" + "id=" + id + ", messageContent='" + messageContent + '\'' + ", createdAt=" + createdAt
-				+ ", sender=" + (sender != null ? sender.getEmail() : "null") + ", receiver="
-				+ (receiver != null ? receiver.getEmail() : "null") + ", messageType=" + messageType + '}';
-	}
-
+		return "Message [messageContent=" + messageContent + ", messageType=" + messageType + ", sender=" + sender
+				+ ", receiver=" + receiver + ", id=" + id + ", createdAt=" + createdAt + "]";
+	} 
 }

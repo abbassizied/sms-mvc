@@ -10,10 +10,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import io.github.abbassizied.sms.entities.Role;
 import io.github.abbassizied.sms.entities.User;
-import io.github.abbassizied.sms.forms.UserForm;
+import io.github.abbassizied.sms.forms.RegisterForm; 
 import io.github.abbassizied.sms.services.RoleService;
 import io.github.abbassizied.sms.services.UserService;
-
+import io.github.abbassizied.sms.utils.Alert;
 import jakarta.validation.Valid;
 
 @Controller
@@ -30,45 +30,43 @@ public class RegistrationController {
 
 	@GetMapping("/register")
 	public String showRegistrationForm(Model model) {
-		UserForm userForm = new UserForm();
-		model.addAttribute("userForm", userForm);
+		RegisterForm registerForm = new RegisterForm();
+		model.addAttribute("registerForm", registerForm);
 		return "frontoffice/register";
 	}
 
 	@PostMapping("/register")
-	public String registerUserAccount(@Valid UserForm userForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	public String registerUserAccount( @Valid @ModelAttribute("registerForm") RegisterForm registerForm, 
+			                           BindingResult bindingResult, 
+			                           RedirectAttributes redirectAttributes) {
 
-	    if (bindingResult.hasErrors()) {
-	        // Print validation errors to the console
-	        bindingResult.getAllErrors().forEach(error -> {
-	            System.out.println("Error: " + error.getDefaultMessage());
-	        });
+	    if (bindingResult.hasErrors()) { 
 	        return "frontoffice/register"; // Return to the registration page if there are errors
 	    }		
 	    
 	    User user = new User();
 	    
 	    // Retrieve the "USER" role from the database
-        Role userRole = roleService.findRoleByName("USER");
+        Role userRole = roleService.findRoleByName("ROLE_USER");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         // Assign the existing role to the user
 	    Set<Role> roles = new HashSet<>(); 
 	    roles.add(userRole); 
 	    user.setRoles(roles);
 	    
-	    user.setFirstName(userForm.getFirstName());
-	    user.setLastName(userForm.getLastName());
-	    user.setEmail(userForm.getEmail());
-	    user.setPassword(userForm.getPassword());
+	    user.setFirstName(registerForm.getFirstName());
+	    user.setLastName(registerForm.getLastName());
+	    user.setEmail(registerForm.getEmail());
+	    user.setPassword(registerForm.getPassword());
+	    user.setActive(true);  // Set the user account to active, allowing login functionality
 
 		// Save the user
 		userService.createUser(user);
-		
-		// Add a success message to the model to display in the UI
-	    // Add success message to RedirectAttributes
-	    redirectAttributes.addFlashAttribute("successRegister", "Registration successful! Your account has been created.");
  
-		return "redirect:/frontoffice/register"; // Redirect to the register page after successful registration
+	    // Add success message to RedirectAttributes
+        redirectAttributes.addFlashAttribute("alert", new Alert("success", "Registration successful! Your account has been created.")); 
+ 
+		return "redirect:/register"; // Redirect to the register page after successful registration
 	}
 
 }

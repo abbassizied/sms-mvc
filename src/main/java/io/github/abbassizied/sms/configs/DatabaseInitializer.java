@@ -34,7 +34,8 @@ public class DatabaseInitializer implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         initializePrivileges();
-        initializeRolesAndUsers();
+        initializeSuperAdminRoleAndPrivileges();
+        initializeDefaultRole(); // Adding default role initialization
     }
 
     private void initializePrivileges() {
@@ -47,7 +48,14 @@ public class DatabaseInitializer implements ApplicationRunner {
         }
     }
 
-    private void initializeRolesAndUsers() {
+    private void initializeDefaultRole() {
+        roleRepository.findByName("ROLE_USER").orElseGet(() -> {
+            Role defaultRole = new Role("ROLE_USER");
+            return roleRepository.save(defaultRole);
+        });
+    }
+      
+    private void initializeSuperAdminRoleAndPrivileges() {
         // 1. Create SUPERADMIN Role if it doesn't exist
         Role superAdminRole = roleRepository.findByName("ROLE_SUPER_ADMIN")
                 .orElseGet(() -> {

@@ -64,7 +64,9 @@ public class User extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + ", active=" + active + ", roles=" + roles + "]";
-	}    
+		return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password=" + password
+				+ ", photoUrl=" + photoUrl + ", active=" + active + ", roles=" + roles + "]";
+	}
+
+ 
 }

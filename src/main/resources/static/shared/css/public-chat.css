@@ -1,0 +1,30 @@
+        .chat-box {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .chat-message-other {
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .chat-message-me {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .user-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .online-indicator {
+            color: green;
+            font-size: 12px;
+        }
+        .offline-indicator {
+            color: gray;
+            font-size: 12px;
+        }
+        
+
+     

@@ -32,7 +32,6 @@ public class Privilege extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "[id=" + id + "," + name + "]";
-	}
-
+		return "Privilege [name=" + name + ", id=" + id + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+	} 
 }
