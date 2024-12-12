@@ -1,56 +1,70 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{frontoffice/main_layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{frontoffice/main_layout}">
 <head>
-	<title>Contact Us</title>
+    <title>Contact Us</title>
 </head>
 <body>
 
-	<th:block layout:fragment="content">
-		<!-- Content go here -->
+<th:block layout:fragment="content">
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Contact Us</h1>
+                <p class="lead fw-normal text-white-50 mb-0">We'd love to hear from you!</p>
+            </div>
+        </div>
+    </header>
 
-		<!-- Contact Section-->
-		<header class="bg-dark py-5">
-			<div class="container px-4 px-lg-5">
-				<div class="text-center text-white">
-					<h1 class="display-4 fw-bolder">Contact Us</h1>
-					<p class="lead fw-normal text-white-50 mb-0">We'd love to hear
-						from you!</p>
-				</div>
-			</div>
-		</header>
+    <section class="py-5">
+        <div class="container px-4 px-lg-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                
+                   <div th:replace="~{frontoffice/alert :: alert}"></div>
+                
+                    <form th:action="@{/contact}" th:object="${contactForm}" method="post">
+                        
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="firstName" th:field="*{firstName}">
+                            <p class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" th:field="*{lastName}">
+                            <p class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                        </div>
 
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" th:field="*{email}">
+                            <p class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                        </div>
 
-		<section class="py-5">
-			<div class="container px-4 px-lg-5">
-				<div class="row justify-content-center">
-					<div class="col-lg-8">
-						<form>
-							<div class="mb-3">
-								<label for="name" class="form-label">Full Name</label> <input
-									type="text" class="form-control" id="name"
-									placeholder="Enter your name">
-							</div>
-							<div class="mb-3">
-								<label for="email" class="form-label">Email Address</label> <input
-									type="email" class="form-control" id="email"
-									placeholder="Enter your email">
-							</div>
-							<div class="mb-3">
-								<label for="message" class="form-label">Message</label>
-								<textarea class="form-control" id="message" rows="5"
-									placeholder="Write your message"></textarea>
-							</div>
-							<button type="submit" class="btn btn-primary w-100">Send
-								Message</button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</section>
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="subject" th:field="*{subject}">
+                            <p class="text-danger" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></p>
+                        </div>
 
-	</th:block>
-	
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="messageBody" rows="5" th:field="*{messageBody}"></textarea>
+                            <p class="text-danger" th:if="${#fields.hasErrors('messageBody')}" th:errors="*{messageBody}"></p>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Send Message</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</th:block>
+
 </body>
 </html>

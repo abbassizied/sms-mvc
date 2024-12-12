@@ -1,9 +1,9 @@
 package io.github.abbassizied.sms.controllers;
  
-import io.github.abbassizied.sms.entities.Message;
+import io.github.abbassizied.sms.entities.ChatMessage; 
 import io.github.abbassizied.sms.entities.User;
-import io.github.abbassizied.sms.enums.MessageType;
-import io.github.abbassizied.sms.services.MessageService;
+import io.github.abbassizied.sms.enums.ChatMessageType;
+import io.github.abbassizied.sms.services.ChatMessageService;
 import io.github.abbassizied.sms.services.UserService;
  
 import org.springframework.messaging.handler.annotation.*;
@@ -18,11 +18,11 @@ import java.util.List;
 @Controller
 public class ChatController {
 
-	private final MessageService messageService;
+	private final ChatMessageService chatMessageService;
 	private final UserService userService;
 
-    public ChatController(MessageService messageService, UserService userService) {
-		this.messageService = messageService;
+    public ChatController(ChatMessageService chatMessageService, UserService userService) {
+		this.chatMessageService = chatMessageService;
 		this.userService = userService;
 	}
 
@@ -30,7 +30,7 @@ public class ChatController {
 	@GetMapping("/public-chat")
     public String publicChat(Model model, Authentication authentication) {
 		
-		List<Message> messages = messageService.getMessagesByType(MessageType.PUBLIC_CHAT); 
+		List<ChatMessage> messages = chatMessageService.getMessagesByType(ChatMessageType.PUBLIC_CHAT); 
 		// System.out.println(messages);
 		
 		List<User> users = userService.getAllUsers();
@@ -57,13 +57,13 @@ public class ChatController {
 
     @MessageMapping("/chat.broadcast")
     @SendTo("/topic/broadcast")
-    public Message broadcastMessage(Message message, Principal principal) {
+    public ChatMessage broadcastMessage(ChatMessage message, Principal principal) {
 
 		User sender = userService.findByEmail(principal.getName());
         
         // Create and save a broadcast message
-		Message newMessage = new Message(sender, message.getMessageContent()); 
-        messageService.saveMessage(newMessage);
+		ChatMessage newMessage = new ChatMessage(sender, message.getMessageContent()); 
+		chatMessageService.saveMessage(newMessage);
         
         return newMessage;
     }
@@ -80,7 +80,7 @@ public class ChatController {
             return "error"; // Handle the case where the recipient does not exist
         }
 
-        List<Message> messages = messageService.getPrivateMessages(currentUser, receiver);
+        List<ChatMessage> messages = chatMessageService.getPrivateMessages(currentUser, receiver);
         
 		// System.out.println("********************************************************");
         // System.out.println(messages);
@@ -97,7 +97,7 @@ public class ChatController {
      */
     @MessageMapping("/chat.private.{receiverId}")
     @SendTo("/topic/private")
-    public Message privateMessage(Message message, Principal principal, @DestinationVariable Long receiverId) {
+    public ChatMessage privateMessage(ChatMessage message, Principal principal, @DestinationVariable Long receiverId) {
         User sender = userService.findByEmail(principal.getName()); // Get the sender
         User receiver = userService.getUserById(receiverId); // Get the receiver by ID
 
@@ -106,8 +106,8 @@ public class ChatController {
         }        
         
         // Create and save the private message
-        Message newMessage = new Message(sender, message.getMessageContent(), receiver);
-        messageService.saveMessage(newMessage);
+        ChatMessage newMessage = new ChatMessage(sender, message.getMessageContent(), receiver);
+        chatMessageService.saveMessage(newMessage);
         
         return newMessage; // Return the new message to be sent to the receiver
     }
