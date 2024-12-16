@@ -1,13 +1,34 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{fragments/layout}">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title th:text="#{message.title}">Messages Management</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-	<section layout:fragment="content">
-		<!-- Messages Management Content -->
-	</section>
+
+
+
+<!-- message/message.html -->
+<th:block th:fragment="messageFragment"> 
+
+
+        <a th:href="@{'/messages/message-read'}" class="list-group-item list-group-item-action">
+          <div class="d-flex justify-content-between align-items-center">
+            <h6 class="mb-1">John Doe</h6>
+            <small>2 mins ago</small>
+          </div>
+          <p class="mb-1">Subject: Website Feedback</p>
+          <small class="text-muted">Hello, I have a question about your...</small>
+        </a>
+
+
+</th:block>
+
+
+
+
+
+
+	
 </body>
 </html>

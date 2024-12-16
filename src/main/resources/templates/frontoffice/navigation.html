@@ -28,6 +28,7 @@
 						<li class="nav-item"><a class="nav-link" th:href="@{/about}">About</a></li>
 						<li class="nav-item"><a class="nav-link" th:href="@{/contact}">Contact</a></li>
 					</ul>
+					<div th:replace="~{frontoffice/cart :: cart}"></div>
 					<form class="d-flex me-3">
 						<button class="btn btn-outline-dark" type="submit">
 							<i class="bi-cart-fill me-1"></i> Cart 

@@ -6,7 +6,7 @@
     <title>Product Form</title>
 </head>
 <body>
-    <div th:fragment="productForm(action, buttonLabel)">
+    <div th:fragment="updateProductForm(buttonLabel)">
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-md-12">
@@ -14,7 +14,7 @@
                         <div class="card-body">
                             <div class="form-validation">
                                 <form class="form-valide" 
-                                      th:action="@{${action} == 'add' ? '/products/add' : '/products/update/' + ${productForm.id}}"
+                                      th:action="@{'/products/update/' + ${productForm.id}}"
                                       th:object="${productForm}" 
                                       enctype="multipart/form-data" 
                                       method="post">
@@ -60,19 +60,10 @@
 
 
 	<div th:replace="~{fragments/inputField :: input(
-		field='quantity',
+		field='initialQuantity',
 		type='number',
-		label=${#messages.msg('product.quantity.label')},
-		placeholder=${#messages.msg('product.quantity.placeholder')} 
-		)}"								
-	></div>
-
-
-	<div th:replace="~{fragments/inputField :: input(
-		field='reorderLevel',
-		type='number',
-		label=${#messages.msg('product.reorderLevel.label')},
-		placeholder=${#messages.msg('product.reorderLevel.placeholder')} 
+		label=${#messages.msg('product.initialQuantity.label')},
+		placeholder=${#messages.msg('product.initialQuantity.placeholder')} 
 		)}"								
 	></div>
 

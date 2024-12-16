@@ -6,8 +6,7 @@ package io.github.abbassizied.sms.forms;
  */
 
 import jakarta.validation.constraints.*;
-import org.springframework.web.multipart.MultipartFile;
-import io.github.abbassizied.sms.forms.validations.ValidMultipartFile;
+import org.springframework.web.multipart.MultipartFile; 
 
 public class SupplierForm {
 	
@@ -18,8 +17,7 @@ public class SupplierForm {
     @Size(min = 2, max = 30, message = "{supplier.companyName.size}", groups = { OnCreate.class, OnUpdate.class })
     private String name; 
 
-    // Logo URL: Optional, but if provided must be a valid URL 
-    @ValidMultipartFile(groups = OnCreate.class)
+    // Logo URL: Optional, but if provided must be a valid URL  
     private MultipartFile logoUrl;
 
     // Email: Required, must be a valid email format

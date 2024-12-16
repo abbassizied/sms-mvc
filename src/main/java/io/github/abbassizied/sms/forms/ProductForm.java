@@ -1,48 +1,42 @@
 package io.github.abbassizied.sms.forms;
 
-import jakarta.validation.constraints.*;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import io.github.abbassizied.sms.entities.Supplier;
-import io.github.abbassizied.sms.forms.validations.ValidMultipartFile;
+import jakarta.validation.constraints.*;
 
 public class ProductForm {
+
     private Long id;
 
     // Name: Required, between 2 and 50 characters
-    @NotBlank(message = "{product.name.notBlank}", groups = { OnCreate.class, OnUpdate.class })
-    @Size(min = 2, max = 50, message = "{product.name.size}", groups = { OnCreate.class, OnUpdate.class })
+    @NotBlank(message = "{product.name.notBlank}")
+    @Size(min = 2, max = 50, message = "{product.name.size}")
     private String name;
-    
-    // Logo URL: Required, must be a valid File Type
-    @ValidMultipartFile(groups = OnCreate.class)
+
     private MultipartFile mainImage;
-    
-    // Description: Required, must not exceed 255 characters
-    @Size(max = 255, message = "{product.description.size}", groups = { OnCreate.class, OnUpdate.class })
+
+    // Description: Optional, but limited length
+    @Size(min=10, max = 2000, message = "{product.description.size}")
     private String description;
 
-    // Price: Required, must be positive
-    @NotNull(message = "{product.price.notNull}", groups = { OnCreate.class, OnUpdate.class })
-    @DecimalMin(value = "0.0", inclusive = false, message = "{product.price.positive}", groups = { OnCreate.class, OnUpdate.class })
+    // Price: Required, must be positive, with max value
+    @NotNull(message = "{product.price.notNull}")
+    @DecimalMin(value = "0.01", inclusive = true, message = "{product.price.positive}")
+    @DecimalMax(value = "100000.00", inclusive = true, message = "{product.price.max}")
     private Double price;
 
-    // Quantity: Optional, but if provided must be non-negative
-    @Min(value = 0, message = "{product.quantity.nonNegative}", groups = { OnCreate.class, OnUpdate.class })
-    private Integer quantity;
-
-    // Reorder Level: Optional, but if provided must be non-negative
-    @Min(value = 0, message = "{product.reorderLevel.nonNegative}")
-    private Integer reorderLevel;
+    // Initial Quantity: Required, must be positive
+    @NotNull(message = "{product.initialQuantity.notNull}")
+    @Min(value = 0, message = "{product.initialQuantity.nonNegative}")
+    private Integer initialQuantity;
 
     // Supplier: Required
-    @NotNull(message = "{product.supplier.notNull}")    
+    @NotNull(message = "{product.supplier.notNull}")
     private Supplier supplier;
 
-    // Image URLs: Required
-    @ValidMultipartFile(groups = OnCreate.class)
     private List<MultipartFile> images;
 
     // Constructors
@@ -51,7 +45,7 @@ public class ProductForm {
      * Default constructor for form binding.
      */
     public ProductForm() {}
-  
+
     // Getters and Setters
     public Long getId() {
         return id;
@@ -68,16 +62,16 @@ public class ProductForm {
     public void setName(String name) {
         this.name = name;
     }
- 
+
     public MultipartFile getMainImage() {
-		return mainImage;
-	}
+        return mainImage;
+    }
 
-	public void setMainImage(MultipartFile mainImage) {
-		this.mainImage = mainImage;
-	}
+    public void setMainImage(MultipartFile mainImage) {
+        this.mainImage = mainImage;
+    }
 
-	public String getDescription() {
+    public String getDescription() {
         return description;
     }
 
@@ -93,37 +87,34 @@ public class ProductForm {
         this.price = price;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getInitialQuantity() {
+        return initialQuantity;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setInitialQuantity(Integer initialQuantity) {
+        this.initialQuantity = initialQuantity;
     }
 
-    public Integer getReorderLevel() {
-        return reorderLevel;
-    }
-
-    public void setReorderLevel(Integer reorderLevel) {
-        this.reorderLevel = reorderLevel;
-    }
-
-    // Getter for 'supplier'
     public Supplier getSupplier() {
         return supplier;
     }
 
-    // Setter for 'supplier'
     public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
     }
-    
+
     public List<MultipartFile> getImages() {
         return images;
     }
 
     public void setImages(List<MultipartFile> images) {
         this.images = images;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductForm [id=" + id + ", name=" + name + ", mainImage=" + mainImage + ", description=" + description
+                + ", price=" + price + ", initialQuantity=" + initialQuantity + ", supplier=" + supplier + ", images="
+                + images + "]";
     }
 }

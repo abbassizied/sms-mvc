@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+
+
+<!-- message/message-sidebar.html -->
+<th:block th:fragment="messageSidebarFragment"> 
+
+
+    <div class="col-lg-3 col-md-3 col-sm-3 bg-light p-3">
+      <h5 class="text-uppercase mb-4">Messages</h5>
+      <a class="btn btn-primary btn-block" th:href="@{'/messages/message-compose'}">Compose New</a> 
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" th:href="@{'/messages'}"><i class="fa fa-inbox mr-2"></i>Inbox</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{'/messages/messages-sent'}"><i class="fa fa-paper-plane mr-2"></i>Sent</a>
+        </li>
+      </ul>
+    </div>
+
+
+
+
+</th:block>
+
+
+
+
+
+
+	
+</body>
+</html>

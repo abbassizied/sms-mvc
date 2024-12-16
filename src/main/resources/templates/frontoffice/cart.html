@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+	<th:block th:fragment="cart">
+<div class="cart-container">
+    <a href="#" id="toggle-cart" class="btn btn-outline-dark">
+        <i class="bi-cart-fill me-1"></i> Cart 
+        <span id="cart-count" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+    </a>
+    <div id="cart-card" class="dropdown-cart" style="display: none;">
+        <button id="close-cart" class="btn btn-outline-secondary mb-2">Close</button>
+        <div id="cart-details"></div>
+    </div>
+</div>
+
+	
+	</th:block>
+
+	
+
+
+</body>
+</html>	

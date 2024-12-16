@@ -42,7 +42,8 @@
          <div class="col-lg-6">
  			<!-- InputFile Field -->
  			<div class="custom-file">
- 				<input type="file"
+ 				<input type="file" 
+ 					   accept=".png,.jpg,.jpeg"
  				       class="custom-file-input" 
  				       th:field="*{__${field}__}"
  			           th:id="${#strings.toLowerCase(field)}"

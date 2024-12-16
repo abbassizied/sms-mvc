@@ -28,8 +28,8 @@
                                     <th th:text="#{product.mainImage.label}">Logo</th>
                                     <th th:text="#{product.name.label}">Name</th>
                                     <th th:text="#{product.price.label}">Price</th>
+                                    <th th:text="#{product.initialQuantity.label}">Initial Quantity</th>
                                     <th th:text="#{product.quantity.label}">Quantity</th>
-                                    <th th:text="#{product.reorderLevel.label}">Reorder Level</th>
                                     <th th:text="#{label.actions}">Actions</th>
                                 </tr>
                             </thead>
@@ -44,8 +44,8 @@
                                     </td>
                                     <td th:text="${product.name}"></td>
                                     <td th:text="${product.price}"></td>
+                                    <td th:text="${product.initialQuantity}"></td>
                                     <td th:text="${product.quantity}"></td>
-                                    <td th:text="${product.reorderLevel}"></td>
                                     <td>
                                         <a th:href="@{/products/show/{id}(id=${product.id})}" 
                                            class="btn btn-sm btn-rounded btn-primary">

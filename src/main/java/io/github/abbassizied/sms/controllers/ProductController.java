@@ -3,16 +3,15 @@ package io.github.abbassizied.sms.controllers;
 import io.github.abbassizied.sms.entities.Image;
 import io.github.abbassizied.sms.entities.Product;
 import io.github.abbassizied.sms.entities.Supplier;
-import io.github.abbassizied.sms.forms.ProductForm;
-import io.github.abbassizied.sms.forms.OnCreate;
-import io.github.abbassizied.sms.forms.OnUpdate;
+import io.github.abbassizied.sms.forms.ProductForm;  
 import io.github.abbassizied.sms.services.ProductService;
 import io.github.abbassizied.sms.services.StorageService;
 import io.github.abbassizied.sms.services.SupplierService;
 import io.github.abbassizied.sms.utils.Alert;
 
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.validation.Valid;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.validation.BindingResult; 
 
 @Controller
 @RequestMapping("/products")
@@ -59,7 +57,7 @@ public class ProductController {
 	@GetMapping("/add")
 	public String addProductForm(Model model) {
 		ProductForm productForm = new ProductForm();
-		// Assuming you have a list of suppliers
+		// List of suppliers
 		List<Supplier> suppliers = supplierService.listSuppliers();
 		model.addAttribute("productForm", productForm);
 		model.addAttribute("suppliers", suppliers);
@@ -67,10 +65,21 @@ public class ProductController {
 	}
 
 	@PostMapping("/add")
-	public String addProduct(@Validated(OnCreate.class) @ModelAttribute("productForm") ProductForm productForm,
-			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	public String addProduct( @Valid @ModelAttribute("productForm") ProductForm productForm,
+                              BindingResult bindingResult, 
+			                  Model model,
+			                  RedirectAttributes redirectAttributes) {
+		
+		// System.out.println(productForm);
+	    // If there are validation errors, return the form with error messages
 		if (bindingResult.hasErrors()) {
-			return "product/addProduct"; // Return the form if validation fails
+	        System.out.println("Validation errors: " + bindingResult.getAllErrors());
+
+	        // Re-populate suppliers list and pass it to the form again
+			List<Supplier> suppliers = supplierService.listSuppliers(); 
+			model.addAttribute("suppliers", suppliers);
+			// Return the form with validation errors
+			return "product/addProduct";  
 		}
 
 		String mainImageName = storageService.storeSingleFile(productForm.getMainImage());
@@ -82,8 +91,8 @@ public class ProductController {
 		product.setMainImage(mainImageName); // be carefull
 		product.setDescription(productForm.getDescription());
 		product.setPrice(productForm.getPrice());
-		product.setQuantity(productForm.getQuantity());
-		product.setReorderLevel(productForm.getReorderLevel());
+		product.setQuantity(productForm.getInitialQuantity()); // Here Quantity == InitialQuantity
+		product.setInitialQuantity(productForm.getInitialQuantity());
 		product.setSupplier(productForm.getSupplier());
 
 		// Use a list to keep track of the stored image names for potential cleanup
@@ -143,8 +152,7 @@ public class ProductController {
 		// You don't need to set the mainImage as it's a file input in the form
 		productForm.setDescription(product.getDescription());
 		productForm.setPrice(product.getPrice());
-		productForm.setQuantity(product.getQuantity());
-		productForm.setReorderLevel(product.getReorderLevel());
+		productForm.setInitialQuantity(product.getInitialQuantity());
 		productForm.setSupplier(product.getSupplier());
 
 		// Associate the list of suppliers to view
@@ -157,10 +165,15 @@ public class ProductController {
 
 	@PostMapping("/update/{id}")
 	public String updateProduct(@PathVariable("id") long id,
-			@Validated(OnUpdate.class) @ModelAttribute("ProductForm") ProductForm productForm,
-			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+			                    @Valid @ModelAttribute("ProductForm") ProductForm productForm,
+								Model model,
+								BindingResult bindingResult, 
+								RedirectAttributes redirectAttributes) {
 
 		if (bindingResult.hasErrors()) {
+			// List of suppliers
+			List<Supplier> suppliers = supplierService.listSuppliers(); 
+			model.addAttribute("suppliers", suppliers);
 			return "product/updateProduct";
 		}
 
@@ -216,8 +229,8 @@ public class ProductController {
 		product.setName(productForm.getName());
 		product.setDescription(productForm.getDescription());
 		product.setPrice(productForm.getPrice());
-		product.setQuantity(productForm.getQuantity());
-		product.setReorderLevel(productForm.getReorderLevel());
+		product.setQuantity(productForm.getInitialQuantity()); // Here Quantity == InitialQuantity
+		product.setInitialQuantity(productForm.getInitialQuantity());
 
 		try { 
 			// Save updated product

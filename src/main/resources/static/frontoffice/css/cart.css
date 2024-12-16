@@ -1,0 +1,26 @@
+.dropdown-cart {
+    position: absolute;
+    background-color: white;
+    padding: 15px;
+    width: 400px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-radius: 5px;
+}
+
+.cart-container {
+    position: relative;
+}
+
+#cart-details table {
+    width: 100%;
+}
+
+#cart-details .cart-total {
+    font-size: 1.2em;
+    text-align: right;
+}
+
+#cart-details button.remove-item {
+    padding: 0.2rem 0.5rem;
+}

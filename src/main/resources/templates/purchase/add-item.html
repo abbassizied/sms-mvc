@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+
+ 
+<!-- fragments/add-item.html -->
+<div th:fragment="addItemFragment"> 
+	<div class="form-group row">
+		<div class="col-lg-4"></div>
+		<div class="col-lg-3">	
+			<!-- Add fields for new item -->
+			<select class="form-control" id="productSelect" required>
+				<option value="" disabled selected>Select a product</option>
+				<option th:each="product : ${products}" 
+						th:value="${product.id}" 
+						th:data-price="${product.price}" 
+						th:text="${product.name}"></option>
+			</select>
+		</div>
+		
+		<div class="col-lg-3">
+			<input class="form-control" id="quantityInput" type="number" name="quantity" min="1" placeholder="Quantity" required>		
+		</div>
+		
+		<div class="col-lg-2">
+			<button class="btn btn-success" type="submit" id="addItem">Add Item</button> 
+		</div>	
+ 
+    </div>		
+</div>
+ 
+ 
+
+	
+</body>
+</html>

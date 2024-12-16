@@ -35,7 +35,6 @@ public class ProductServiceImpl implements ProductService {
     	    // Log the error to understand the issue
     	    System.err.println("Error saving product: " + e.getMessage());
     	    e.printStackTrace();
-
     	    // Rethrow the exception or handle it
     	    throw new RuntimeException("Failed to save the product due to an unexpected error", e);
     	}

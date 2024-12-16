@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Form</title>
+</head>
+<body>
+    <div th:fragment="addProductForm(buttonLabel)">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-validation">
+
+ 
+
+<form th:action="@{/products/add}" 
+      th:object="${productForm}" 
+      method="post" 
+      enctype="multipart/form-data">
+
+    <!-- Hidden field for ID (used for updates) -->
+    <input type="hidden" th:field="*{id}" />
+
+    <!-- Product Name -->
+    <div class="form-group row">
+        <label class="col-lg-4 col-form-label" for="name">
+            Product Name <span class="text-danger">*</span>
+        </label>
+        <div class="col-lg-6">
+            <input type="text" class="form-control" id="name" 
+                   th:field="*{name}" 
+                   placeholder="Enter product name">
+            <!-- Validation Error for 'name' -->
+            <div th:if="${#fields.hasErrors('name')}" class="text-danger">
+                <span th:errors="*{name}"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Image -->
+    <div class="form-group row">
+        <label class="col-lg-4 col-form-label" for="mainImage">
+            Main Image <span class="text-danger">*</span>
+        </label>
+        <div class="col-lg-6">
+            <input type="file" class="form-control" id="mainImage" 
+                   th:field="*{mainImage}" required/>
+        </div>
+    </div>
+
+    <!-- Product Description -->
+    <div class="form-group row">
+        <label class="col-lg-4 col-form-label" for="description">
+            Product Description <span class="text-danger">*</span>
+        </label>
+        <div class="col-lg-6">
+            <textarea class="form-control" id="description" 
+                      th:field="*{description}" 
+                      placeholder="Enter product description"></textarea>
+            <!-- Validation Error for 'description' -->
+            <div th:if="${#fields.hasErrors('description')}" class="text-danger">
+                <span th:errors="*{description}"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Price -->
+    <div class="form-group row">
+        <label class="col-lg-4 col-form-label" for="price">
+            Price <span class="text-danger">*</span>
+        </label>
+        <div class="col-lg-6">
+            <input type="number" class="form-control" id="price" 
+                   th:field="*{price}" placeholder="Enter price" />
+            <!-- Validation Error for 'price' -->
+            <div th:if="${#fields.hasErrors('price')}" class="text-danger">
+                <span th:errors="*{price}"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Initial Quantity -->
+    <div class="form-group row">
+        <label class="col-lg-4 col-form-label" for="initialQuantity">
+            Initial Quantity <span class="text-danger">*</span>
+        </label>
+        <div class="col-lg-6">
+            <input type="number" class="form-control" id="initialQuantity" 
+                   th:field="*{initialQuantity}" placeholder="Enter quantity" />
+            <!-- Validation Error for 'initialQuantity' -->
+            <div th:if="${#fields.hasErrors('initialQuantity')}" class="text-danger">
+                <span th:errors="*{initialQuantity}"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supplier -->
+    <div class="form-group row">
+        <label class="col-lg-4 col-form-label" for="supplier">
+            Supplier <span class="text-danger">*</span>
+        </label>
+        <div class="col-lg-6">
+            <select class="form-control" id="supplier" th:field="*{supplier}">
+                <option value="">Please select</option>
+                <option th:each="supplier : ${suppliers}" 
+                        th:value="${supplier.id}" 
+                        th:text="${supplier.name}"></option>
+            </select>
+            <!-- Validation Error for 'supplier' -->
+            <div th:if="${#fields.hasErrors('supplier')}" class="text-danger">
+                <span th:errors="*{supplier}"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Images -->
+    <div class="form-group row">
+        <label class="col-lg-4 col-form-label" for="images">
+            Images <span class="text-danger">*</span>
+        </label>
+        <div class="col-lg-6">
+            <input type="file" class="form-control" id="images" 
+                   th:field="*{images}" multiple />
+        </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-group row">
+        <div class="col-md-8 ml-auto">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/layout}">
+<head>
+<title>Sent Messages</title>
+</head>
+<body>
+	<section layout:fragment="content">
+		<!-- Messages Management Content -->
+		
+		
+		
+		
+		
+		
+<div class="row"> 
+    <div class="col-md-12 col-md-12 col-sm-12">
+        <div class="card">	
+            <div class="card-body">
+           
+            	
+<div class="row">		
+		
+    <!-- Sidebar Navigation -->
+     <div th:replace="~{message/message-sidebar :: messageSidebarFragment}"></div>
+    
+    
+    
+    <!-- Message List -->
+    <div class="col-lg-9 col-md-9 col-sm-9 p-3">
+      <h5 class="mb-3">Sent</h5>
+      <div class="list-group">
+
+      	<div th:replace="~{message/message :: messageFragment}"></div>
+      	<div th:replace="~{message/message :: messageFragment}"></div>   
+      	<div th:replace="~{message/message :: messageFragment}"></div>   
+      	<div th:replace="~{message/message :: messageFragment}"></div>           
+ 
+
+        <!-- More messages can be added dynamically -->
+      </div>
+    </div>    
+    
+    
+    
+    
+    
+    
+    		
+		
+</div>			
+		 
+        </div>
+    </div>
+    </div>
+</div>		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</section>
+</body>
+</html>

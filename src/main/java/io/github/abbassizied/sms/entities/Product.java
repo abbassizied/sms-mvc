@@ -13,23 +13,21 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private String mainImage;
 
+    @Column(columnDefinition = "TEXT")    
     private String description;
 
     @Column(nullable = false)
     private Double price;
 
+    @Column(nullable = false)    
+    private Integer initialQuantity;
+
     @Column(nullable = false)
     private Integer quantity;
-    
-    private Integer reorderLevel;
 
     @ManyToOne
     @JoinColumn(name = "supplier_id", nullable = false)
-    private Supplier supplier;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "discount_id")
-    private Discount discount;
+    private Supplier supplier; 
 
     /**** One To Many ****/
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
@@ -82,12 +80,12 @@ public class Product extends BaseEntity {
 		this.quantity = quantity;
 	}
 
-	public Integer getReorderLevel() {
-		return reorderLevel;
+	public Integer getInitialQuantity() {
+		return initialQuantity;
 	}
 
-	public void setReorderLevel(Integer reorderLevel) {
-		this.reorderLevel = reorderLevel;
+	public void setInitialQuantity(Integer initialQuantity) {
+		this.initialQuantity = initialQuantity;
 	}
 
 	public Supplier getSupplier() {
@@ -96,15 +94,7 @@ public class Product extends BaseEntity {
 
 	public void setSupplier(Supplier supplier) {
 		this.supplier = supplier;
-	}
-
-	public Discount getDiscount() {
-		return discount;
-	}
-
-	public void setDiscount(Discount discount) {
-		this.discount = discount;
-	}
+	} 
 
 	public List<Image> getImages() {
 		return images;
@@ -116,9 +106,9 @@ public class Product extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", mainImage=" + mainImage + ", description=" + description
-				+ ", price=" + price + ", quantity=" + quantity + ", reorderLevel=" + reorderLevel + ", supplier="
-				+ supplier.toString() + ", discount=" + discount.toString() + ", images=" + images + "]";
-	}
+		return "Product [name=" + name + ", mainImage=" + mainImage + ", description=" + description + ", price="
+				+ price + ", initialQuantity=" + initialQuantity + ", quantity=" + quantity + ", supplier=" + supplier
+				+ ", images=" + images + ", id=" + id + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+	} 
 
 }

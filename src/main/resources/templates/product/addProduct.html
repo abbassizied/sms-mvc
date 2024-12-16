@@ -9,8 +9,7 @@
 	<section layout:fragment="content">
 
 
-		<div th:replace="~{product/productForm :: productForm(
-			action='add', 
+		<div th:replace="~{product/addProductForm :: addProductForm( 
 			buttonLabel=${#messages.msg('label.create')}
 			)}">
 		</div>

@@ -39,8 +39,15 @@
 							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 								<div class="text-center">
 									<a class="btn btn-outline-dark mt-auto"
-										th:href="@{/product-details/{id}(id=${product.id})}">View
-										options</a>
+										th:href="@{/product-details/{id}(id=${product.id})}"><i class="bi bi-eye me-1"></i>View
+									</a> 
+									<button class="btn btn-outline-dark flex-shrink-0 add-to-cart" type="button"
+									    th:data-id="${product.id}"
+									    th:data-name="${product.name}"
+									    th:data-price="${product.price}">
+									    <i class="bi-cart-fill me-1"></i> Add to cart
+									</button>
+
 								</div>
 							</div>
 						</div>

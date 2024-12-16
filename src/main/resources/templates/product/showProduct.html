@@ -70,15 +70,15 @@
                                 <strong class="text-dark mr-4" th:text="#{product.price.label}">Price</strong>
                                 <span th:text="${product.price}">$99.99</span>
                             </li>
+                            <!-- Initial Quantity -->
+                            <li class="mb-1">
+                                <strong class="text-dark mr-4" th:text="#{product.initialQuantity.label}">Initial Quantity</strong>
+                                <span th:text="${product.initialQuantity}">10</span>
+                            </li>
                             <!-- Product Quantity -->
                             <li class="mb-1">
                                 <strong class="text-dark mr-4" th:text="#{product.quantity.label}">Quantity</strong>
                                 <span th:text="${product.quantity}">50</span>
-                            </li>
-                            <!-- Reorder Level -->
-                            <li class="mb-1">
-                                <strong class="text-dark mr-4" th:text="#{product.reorderLevel.label}">Reorder Level</strong>
-                                <span th:text="${product.reorderLevel}">10</span>
                             </li>
                             <!-- Description -->
                             <li>

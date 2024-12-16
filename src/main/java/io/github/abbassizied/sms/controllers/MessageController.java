@@ -8,9 +8,31 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/messages")
 public class MessageController {
 
+	
+	MessageController(){
+		
+	}
+	
     @GetMapping
-    public String manageMessages(Model model) {    
-        return "message/message";  // Return the view for messages management
+    public String showMessagesInBox(Model model) {    
+        return "message/message-inbox";  // Return the view for messages management
     }
+
+	
+    @GetMapping("messages-sent")
+    public String showSentMessages(Model model) {    
+        return "message/messages-sent";  // Return the view for messages management
+    }    
+    
+    @GetMapping("message-read")
+    public String readMessage(Model model) {    
+        return "message/message-read";  // Return the view for messages management
+    }    
+    
+    @GetMapping("message-compose")
+    public String showMessageComposeForm(Model model) {    
+        return "message/message-compose";  // Return the view for messages management
+    }    
+    
     
 }
