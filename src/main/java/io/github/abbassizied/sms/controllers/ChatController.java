@@ -58,11 +58,13 @@ public class ChatController {
     @MessageMapping("/chat.broadcast")
     @SendTo("/topic/broadcast")
     public ChatMessage broadcastMessage(ChatMessage message, Principal principal) {
-
+        
+    	// System.out.println(message.getMessageContent()); 
 		User sender = userService.findByEmail(principal.getName());
         
         // Create and save a broadcast message
-		ChatMessage newMessage = new ChatMessage(sender, message.getMessageContent()); 
+		ChatMessage newMessage = new ChatMessage(sender, message.getMessageContent());
+    	// System.out.println(newMessage); 
 		chatMessageService.saveMessage(newMessage);
         
         return newMessage;
@@ -114,5 +116,4 @@ public class ChatController {
 	    
     
 }
-
 

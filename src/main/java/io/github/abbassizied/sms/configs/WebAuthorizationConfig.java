@@ -13,10 +13,10 @@ public class WebAuthorizationConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
+            .csrf(csrf -> csrf.disable()) // Ensure CSRF is disabled if you're making POST requests via AJAX
             .authorizeHttpRequests(requests -> requests
-            	.requestMatchers("/", "/product-details/**", "/login", "/register", "/contact", "/about").permitAll() 
-            	// Allow authenticated users
+            	.requestMatchers("/", "/product-details/**", "/login", "/register", "/contact", "/about", "/orders/checkout").permitAll() 
+            	// Define which URLs require authentication 
             	.requestMatchers("/dashboard").authenticated() // Ensure this is correct ??????????
             	// Securing password management with specific authorities
                 .requestMatchers("/users/update-password").authenticated()  // Ensure this is correct ??????????

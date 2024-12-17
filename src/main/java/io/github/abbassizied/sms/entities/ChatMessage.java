@@ -35,6 +35,7 @@ public class ChatMessage extends Message {
 	public ChatMessage(User sender, String messageContent) {
 		super();
 		this.sender = sender;
+		this.messageContent = messageContent;
 		this.messageType = ChatMessageType.PUBLIC_CHAT;
 	}
 
@@ -56,5 +57,5 @@ public class ChatMessage extends Message {
 	public void setMessageType(ChatMessageType messageType) { this.messageType = messageType; }
 
 	// toString for easier logging/debugging
- 
+
 }

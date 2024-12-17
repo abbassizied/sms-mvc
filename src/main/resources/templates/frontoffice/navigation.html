@@ -28,13 +28,12 @@
 						<li class="nav-item"><a class="nav-link" th:href="@{/about}">About</a></li>
 						<li class="nav-item"><a class="nav-link" th:href="@{/contact}">Contact</a></li>
 					</ul>
+	
+					
+					
 					<div th:replace="~{frontoffice/cart :: cart}"></div>
-					<form class="d-flex me-3">
-						<button class="btn btn-outline-dark" type="submit">
-							<i class="bi-cart-fill me-1"></i> Cart 
-							<span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-						</button>
-					</form> 
+
+
 
 					<div class="d-flex" sec:authorize="!isAuthenticated()">
 						<a class="btn btn-link text-decoration-none me-2" th:href="@{/login}">Login</a> 

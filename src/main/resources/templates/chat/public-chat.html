@@ -128,6 +128,9 @@
                     
                     <!-- message form -->
                     <form> 
+                        <!-- Hidden field for ID (used for updates) --> 
+                        <input type="hidden" th:value="${username}" id="username" />
+                    
 	                    <!-- Message Input -->
 	                    <div class="form-group">
 	                        <textarea class="form-control" rows="2" id="message" name="message" placeholder="Chat with us!"></textarea>
