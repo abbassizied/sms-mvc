@@ -8,7 +8,8 @@ public class PurchaseItem extends BaseEntity {
 	
     @Column(nullable = false)
     private Integer quantity = 0;
-    
+
+    @Column    
     private Double subTotalPrice = 0.0;
 
     @ManyToOne

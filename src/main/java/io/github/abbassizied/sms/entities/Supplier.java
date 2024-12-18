@@ -10,9 +10,16 @@ public class Supplier extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
+    @Column
     private String logoUrl;
+
+    @Column
     private String email;
+
+    @Column
     private String phone;
+
+    @Column
     private String address;
 
     @OneToMany(mappedBy = "supplier")

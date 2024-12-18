@@ -13,8 +13,13 @@ public class Customer extends BaseEntity {
     @Column(nullable = false)
     private String lastName;
 
+    @Column
     private String email;
+
+    @Column    
     private String phone;
+
+    @Column    
     private String address;
 
     @OneToMany(mappedBy = "customer")

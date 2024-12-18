@@ -3,7 +3,37 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{frontoffice/main_layout}">
 <head>
-<title>About Us</title>
+	<title>About Us</title>
+    <style>
+        /* Include the minimal CSS here or in an external stylesheet */
+        .supplier-logo {
+            max-width: 100px;
+            max-height: 100px;
+            object-fit: cover;
+        }
+        
+        .container {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
+            padding: 0 15px;
+        }
+        .container p {
+            margin-bottom: 1em;
+            line-height: 1.6;
+        }
+        .container span {
+            word-break: break-word;
+        }
+        @media (max-width: 768px) {
+            .container h2 {
+                font-size: 1.5rem;
+            }
+            .container p {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -22,15 +52,63 @@
 			</div>
 		</header>
 		<section class="py-5">
+		
+		
 			<div class="container px-4 px-lg-5">
-				<h2>Our Story</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					Vestibulum ac nunc ligula. Quisque at convallis enim. Suspendisse
-					potenti.</p>
-				<h2>Our Mission</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					Nulla consectetur fermentum mi, nec varius lorem interdum non.</p>
+			    <!-- Our Story Section -->
+			    <h2>Our Story</h2>
+			    <p th:text="${companySetting.aboutUs}">Default story about the company.</p>
+			
+			    <!-- Contact Details Section (optional) -->
+			    <h2>Contact Us</h2>
+			    <p>Email: <span th:text="${companySetting.email}">info@company.com</span></p>
+			    <p>Phone: <span th:text="${companySetting.phone}">+1 234 567 890</span></p>
+			    <p>Address: <span th:text="${companySetting.address}">1234 Main St, Anytown, ABC 12345</span></p>
 			</div>
+
+			
+			
+			
+            <!-- Our Partners Section -->
+            <div class="container px-4 px-lg-5 mt-5">
+                <h2 class="mb-4">Our Partners</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-4" th:each="supplier : ${suppliers}">
+                        <div class="card h-100 text-center">
+                            <div class="card-body">
+                                <!-- Supplier Logo -->
+                                <div class="mb-3">
+                                    <img th:src="@{'/uploads/' + ${supplier.logoUrl}}" alt="Supplier Logo" class="supplier-logo img-fluid rounded">
+                                </div>
+
+                                <!-- Supplier Name -->
+                                <h5 class="card-title" th:text="${supplier.name}">Supplier Name</h5>
+
+                                <!-- Supplier Email -->
+                                <p class="card-text">
+                                    <strong>Email:</strong>
+                                    <a th:href="'mailto:' + ${supplier.email}" th:text="${supplier.email}">supplier@example.com</a>
+                                </p>
+
+                                <!-- Supplier Phone -->
+                                <p class="card-text">
+                                    <strong>Phone:</strong>
+                                    <span th:text="${supplier.phone}">123-456-7890</span>
+                                </p>
+
+                                <!-- Supplier Address -->
+                                <p class="card-text">
+                                    <strong>Address:</strong>
+                                    <span th:text="${supplier.address}">123 Supplier Street</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			
+			
+			
 		</section>
 
 	</th:block>

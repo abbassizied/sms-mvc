@@ -15,8 +15,10 @@ public class Order extends BaseEntity {
 	@Column(nullable = false)
 	private String lastName;
 
+    @Column
 	private String email;
 
+    @Column
 	private Integer phone;
 
 	@Column(columnDefinition = "TEXT")
