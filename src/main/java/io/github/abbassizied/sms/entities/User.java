@@ -1,8 +1,7 @@
 package io.github.abbassizied.sms.entities;
  
 import jakarta.persistence.*; 
-import java.util.HashSet;
-import java.util.Set; 
+import java.util.*; 
 
 @Entity
 @Table(name = "users")  // "user" is a reserved keyword in some databases, so we use "users".
@@ -33,7 +32,10 @@ public class User extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
-
+  
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Notification> notifications = new ArrayList<>();    
+    
     // Default constructor 
     public User() {
     	super(); 
@@ -62,11 +64,13 @@ public class User extends BaseEntity {
     public Set<Role> getRoles() { return roles; }
     public void setRoles(Set<Role> roles) { this.roles = roles; }
 
+    public List<Notification> getNotifications() { return notifications; }
+    public void setNotifications(List<Notification> notifications) { this.notifications = notifications; }
+
 	@Override
 	public String toString() {
 		return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password=" + password
-				+ ", photoUrl=" + photoUrl + ", active=" + active + ", roles=" + roles + "]";
-	}
-
- 
+				+ ", photoUrl=" + photoUrl + ", active=" + active + ", roles=" + roles + ", notifications="
+				+ notifications + ", id=" + id + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+	}    
 }

@@ -5,11 +5,25 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Default Title</title>
+	
+    <!-- WebSocket related dependencies -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script> 	
+	
+	<!-- Include jQuery CDN -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+		integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>	
+
+	
 	<!-- Add your CSS or JS files here if necessary -->
 	<link rel="stylesheet" th:href="@{/shared/css/styles.css}" />
 	<!-- Custom JS -->
 	<script type="text/javascript" th:src="@{/shared/js/scripts.js}"></script>
-
+	<script type="text/javascript" th:src="@{/shared/js/contact-messages.js}"></script>
+	<script type="text/javascript" th:src="@{/shared/js/notif-contact-msg.js}"></script>
+	<script type="text/javascript" th:src="@{/shared/js/format-time-ago.js}"></script>
+	 
 	<!-- Favicon icon -->
 	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/backoffice/images/favicon.png}">
 	<!-- Pignose Calender -->

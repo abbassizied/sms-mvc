@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import io.github.abbassizied.sms.entities.ContactMessage;
+import io.github.abbassizied.sms.entities.Notification;
+import io.github.abbassizied.sms.enums.NotificationType;
 import io.github.abbassizied.sms.forms.ContactForm;
 import io.github.abbassizied.sms.services.ContactMessageService;
+import io.github.abbassizied.sms.services.NotificationService;
 import io.github.abbassizied.sms.services.SendEmailService;
 import io.github.abbassizied.sms.utils.Alert;
 import jakarta.validation.Valid;
@@ -17,11 +20,16 @@ import jakarta.validation.Valid;
 public class ContactUsController {
 	
 	private final SendEmailService sendEmailService; 
-	public final ContactMessageService contactMessageService;
+	public final ContactMessageService contactMessageService; 
+	private final NotificationService notificationService;
 
-	ContactUsController( SendEmailService sendEmailService, ContactMessageService contactMessageService) { 
+	ContactUsController( SendEmailService sendEmailService, 
+			             ContactMessageService contactMessageService,
+			             NotificationService notificationService) { 
+		
 		this.sendEmailService = sendEmailService;
 		this.contactMessageService = contactMessageService;
+		this.notificationService = notificationService;
 	}	
 
 	@GetMapping("/contact")
@@ -51,12 +59,29 @@ public class ContactUsController {
         	 contactMessage.setSubject(contactForm.getSubject());
         	 contactMessage.setMessageContent(contactForm.getMessageBody());
         	 
+
+        	// save the contact message in database
+        	contactMessageService.saveContactMessage(contactMessage);
+        	
+       	    //------------------------------------------------------------
+       	    //------------------------------------------------------------
+       	    //------------------------------------------------------------        	
+        	
+        	Notification newNotification = new Notification();
+        	newNotification.setNotificationType(NotificationType.RECEIVED_CONTACT_MESSAGE);
+        	newNotification.setBody("new contact message from <b>" + contactForm.getFirstName() +" " + contactForm.getLastName() + "</b>");
+        	newNotification.setUser(null);  // No user associated
+        	notificationService.sendNotification(newNotification);         	
+        	
+        	
+       	    //------------------------------------------------------------
+       	    //------------------------------------------------------------
+       	    //------------------------------------------------------------        	
+        	
         	// Call the email service to send email to admin
         	sendEmailService.sendSimpleMail("abbassizied@outlook.fr", 
         		                                          contactForm.getSubject(), 
-        		                                          contactForm.getMessageBody());
-        	// save the contact message in database
-        	contactMessageService.saveContactMessage(contactMessage);
+        		                                          contactForm.getMessageBody());        	
         	
         	// Call the email service to send email to the sender 
         	String messageBody = String.format(
@@ -69,6 +94,11 @@ public class ContactUsController {
         	
         	sendEmailService.sendSimpleMail(contactForm.getEmail(), "Re: "+contactForm.getSubject(), messageBody);
             
+       	    //------------------------------------------------------------
+       	    //------------------------------------------------------------
+       	    //------------------------------------------------------------
+        	
+        	
         	// Add success message to RedirectAttributes
         	redirectAttributes.addFlashAttribute("alert", new Alert("success", "Message sent successfully!")); 
         	

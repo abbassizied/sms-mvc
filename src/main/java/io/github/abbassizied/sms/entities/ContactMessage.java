@@ -35,6 +35,14 @@ public class ContactMessage extends Message {
 		super();
 	}
 
+	public ContactMessageType getMessageType() {
+		return messageType;
+	}
+
+	public void setMessageType(ContactMessageType messageType) {
+		this.messageType = messageType;
+	}  
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -65,5 +73,12 @@ public class ContactMessage extends Message {
 
 	public void setSubject(String subject) {
 		this.subject = subject;
-	}  	 	
+	}
+
+	@Override
+	public String toString() {
+		return "ContactMessage [messageType=" + messageType + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", email=" + email + ", subject=" + subject + ", messageContent=" + messageContent + ", isSeen="
+				+ isSeen + ", id=" + id + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+	}	  
 }
