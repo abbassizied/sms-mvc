@@ -28,6 +28,11 @@ public class ChatMessageServiceImpl implements ChatMessageService {
  
     @Override
     public List<ChatMessage> getPrivateMessages(User sender, User receiver) {
-        return chatMessageRepository.findBySenderAndReceiver(sender, receiver);
+        System.out.println("Sender: " + sender.getEmail());
+        System.out.println("Receiver: " + receiver.getEmail());
+        // This query retrieves messages between two users, regardless of who sent the message.
+        // It checks for messages where 'sender' is the current user and 'receiver' is the recipient,
+        // or vice versa (to include messages sent by either user in the conversation).        
+        return chatMessageRepository.findBySenderAndReceiverOrSenderAndReceiver(sender, receiver, receiver, sender);
     }    
 }

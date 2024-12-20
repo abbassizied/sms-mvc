@@ -1,37 +1,101 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{fragments/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+
 <head>
-<title>Private Chat</title>
+    <title>Private Chat</title>
+
+    <!-- WebSocket related dependencies -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script> 
+	
+    <!-- private-chat --> 	 	 
+	<link rel="stylesheet" th:href="@{/shared/css/chat.css}" />
+	<script type="text/javascript" th:src="@{/shared/js/private-chat.js}"></script>	    
+    
 </head>
+
 <body>
-	<section layout:fragment="content">
-		<!-- Private Chat Content -->
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	</section>
+    <section layout:fragment="content">
+        <div class="row">
+            <!-- User Info -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <img th:src="${receiver.photoUrl != null} ? @{/uploads/{photo}(photo=${receiver.photoUrl})} : @{/shared/img/profile-icon.png}"
+                             class="rounded-circle mb-3" width="80" height="80" alt="Avatar">
+                        <h5 class="mb-0" th:text="${receiver.firstName + ' ' + receiver.lastName}">Alex Morgan</h5>
+                        <p class="text-muted">Online</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Private Chat Messages -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="'Chat with ' + ${receiver.firstName + ' ' + receiver.lastName}">Chat with Alex Morgan</h5>
+                        
+                        <div id="conversation" class="chat-box overflow-auto mb-3" style="max-height: 500px;">
+
+                            <!-- Messages -->
+                            <th:block th:each="message : ${messages}">
+                                <!-- Current User's Message -->
+                                <th:block th:if="${message.sender.email == currentUser.email}">
+                                    <div class="media mb-3 flex-row-reverse">
+                                        <img th:src="${message.sender.photoUrl != null} ? @{/uploads/{photo}(photo=${message.sender.photoUrl})} : @{/shared/img/profile-icon.png}"
+                                             class="rounded-circle ml-3" width="40" height="40" alt="Avatar">
+                                        <div class="media-body chat-message-me text-right">
+                                            <h6 class="mt-0">
+                                                You
+                                                <small class="text-muted ml-2" th:text="${#temporals.format(message.updatedAt, 'yyyy-MM-dd HH:mm:ss')}">10:05 AM</small>
+                                            </h6>
+                                            <p th:text="${message.messageContent}">Sure, let's chat!</p>
+                                        </div>
+                                    </div>
+                                </th:block>
+
+                                <!-- Other User's Message -->
+                                <th:block th:unless="${message.sender.email == currentUser.email}">
+                                    <div class="media mb-3">
+                                        <img th:src="${message.sender.photoUrl != null} ? @{/uploads/{photo}(photo=${message.sender.photoUrl})} : @{/shared/img/profile-icon.png}"
+                                             class="rounded-circle mr-3" width="40" height="40" alt="Avatar">
+                                        <div class="media-body chat-message-other">
+                                            <h6 class="mt-0">
+                                                <span th:text="${message.sender.firstName + ' ' + message.sender.lastName}">John Doe</span>
+                                                <small class="text-muted ml-2" th:text="${#temporals.format(message.updatedAt, 'yyyy-MM-dd HH:mm:ss')}">10:00 AM</small>
+                                            </h6>
+                                            <p th:text="${message.messageContent}">Hey, how's it going? Anyone up for a chat?</p>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </th:block>
+
+                        </div>
+
+
+
+					    <form class="form-group">
+				        	<!-- Hidden fields to store receiver information --> 
+                        	<input type="hidden" id="username" th:value="${currentUser.email}" />
+                       		<input type="hidden" id="receiverId" th:value="${receiver.id}" /> 
+				        	
+                        	<!-- Message Input -->
+					        <textarea id="messageContent" class="form-control" rows="2" placeholder="Type your message..."></textarea>
+					        
+					        <div class="text-right">
+					        	<button type="button" class="btn btn-primary px-4 m-3" onclick="sendPrivateMessage()">Send</button>
+					        </div>
+					    </form>
+ 
+ 
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
+
 </html>

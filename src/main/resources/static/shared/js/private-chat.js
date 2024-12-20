@@ -1,39 +1,44 @@
-// Establish a STOMP connection over the WebSocket
-let socket = new SockJS('/ws'); // Use SockJS if configured in Spring for compatibility
-let stompClient = Stomp.over(socket);
+let stompClient = null;
+let socket = new SockJS("/ws");
+stompClient = Stomp.over(socket);
 
 stompClient.connect({}, function (frame) {
-    // console.log('Connected: ' + frame);
-
-    // Subscribe to the public chat topic
-    stompClient.subscribe('/topic/broadcast', function (message) {
-		var msg = JSON.parse(message.body);  // Parse the message
-
-		// Display the message with custom styles
-		displayMessage(msg);
+    console.log("Connected: " + frame);
+    stompClient.subscribe("/topic/private", function (messageOutput) {
+        let message = JSON.parse(messageOutput.body);
+		// console.log("server send: " + message);
+        displayMessage(message); // Display the received message
     });
 });
 
-function sendPublicMessage() {
-    if (stompClient && stompClient.connected) {
-        // Construct a msg object containing the data the server needs to process the message from the chat client.
-        const msg = {
-            messageContent: document.getElementById("message").value,
-        };
 
-		console.log('msg: ' + JSON.stringify(msg));
-		
-        // Send the message to the broadcast channel via STOMP
-        stompClient.send("/app/chat.broadcast", {}, JSON.stringify(msg));
+// Function to send a private message
+function sendPrivateMessage() {
+    
+	let receiverId = document.getElementById("receiverId").value;  // Assuming you have an input field with the receiver's ID. 
+	console.log("receiverId: " + receiverId);		
+	
+	let messageContent = document.getElementById("messageContent").value.trim(); // Trim to remove leading/trailing spaces
 
-        // Clear the input field after sending the message
-        document.getElementById("message").value = "";
-    } else {
-        console.error("WebSocket connection is not open.");
-    }
+	if (!messageContent) {
+	    alert("Message content cannot be empty.");
+	    return; // Do not send if the message content is empty
+	}
+	
+    // Prepare the message payload
+    let message = {
+        messageContent: messageContent
+    };
+
+    // Send the message to the WebSocket destination
+    stompClient.send("/app/chat.private." + receiverId, {}, JSON.stringify(message));
+
+    // Clear the message input field after sending
+    document.getElementById("messageContent").value = "";
 }
 
-// Display the received message in the chat area 
+
+// Display the received message in the chat area
 function displayMessage(msg) {
     // Get the current username
     const username = $('#username').val();
@@ -66,3 +71,7 @@ function displayMessage(msg) {
     // Scroll to the bottom of the chat area
     $('#conversation').scrollTop($('#conversation')[0].scrollHeight);
 }
+
+
+
+ 

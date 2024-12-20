@@ -44,6 +44,7 @@ public class ChatMessage extends Message {
 		super();
 		this.sender = sender; 
 		this.receiver = receiver; 
+		this.messageContent = messageContent;
 		this.messageType = ChatMessageType.PRIVATE_CHAT;
 	} 
  

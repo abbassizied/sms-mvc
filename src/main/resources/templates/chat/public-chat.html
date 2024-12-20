@@ -9,7 +9,7 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script> 
 	
     <!-- public-chat --> 	
-	<link rel="stylesheet" th:href="@{/shared/css/public-chat.css}" />	 
+	<link rel="stylesheet" th:href="@{/shared/css/chat.css}" />	 
 	<script type="text/javascript" th:src="@{/shared/js/public-chat.js}"></script>	
 </head>
 <body>
@@ -42,19 +42,15 @@
                     <div class="user-list">
                     
                         <!-- Iterate over the users passed from the controller -->
-                        <div class="media mb-3 align-items-center" th:each="user : ${users}" th:attr="data-user-id=${user.id}"> 
-                            <!-- Check if photoUrl exists -->
-                            <div th:if="${user.getPhotoUrl() != null}">
-                            	<img th:src="@{'/uploads/' + ${user.getPhotoUrl()}}"
-                            	     class="rounded-circle mr-3" width="40" height="40" alt="Avatar">
-                            </div>    
-                            <!-- Default image if photoUrl is null -->
-                            <div th:if="${user.getPhotoUrl() == null}">
-                            	<img th:src="@{'/shared/img/profile-icon.png'}" 
-                            	     class="rounded-circle mr-3" width="40" height="40" alt="Avatar">
-                            </div>
-                             
-                            <div class="media-body">
+                        <div class="media mb-3 align-items-center" th:each="user : ${users}" th:attr="data-user-id=${user.id}">
+                        
+								<!-- Check if photoUrl exists , Default image if photoUrl is null -->
+								<img
+									th:src="${user.photoUrl != null} ? @{/uploads/{photo}(photo=${user.photoUrl})} : @{/shared/img/profile-icon.png}"
+									class="rounded-circle m-2" width="40" height="40" alt="Avatar">
+
+
+								<div class="media-body">
                                 <!-- Use th:href to handle the onclick dynamically, passing the user ID -->
 						        <a  class="mt-0" th:href="@{/private-chat/{id}(id=${user.id})}" th:text="${user.firstName} + ' ' + ${user.lastName}">
 						         John Doe

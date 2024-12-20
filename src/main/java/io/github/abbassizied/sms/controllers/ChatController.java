@@ -74,25 +74,29 @@ public class ChatController {
      * Handles the display of the private chat page.
      */
     @GetMapping("/private-chat/{id}")
-    public String privateChatPage(@PathVariable Long id, Model model, Principal principal, @DestinationVariable Long receiverId) {
+    public String privateChatPage(@PathVariable Long id, Model model, Principal principal) {
         User currentUser = userService.findByEmail(principal.getName()); // Get the current user
         User receiver = userService.getUserById(id); // Get the receiver by ID 
-        
+
         if (receiver == null) {
             return "error"; // Handle the case where the recipient does not exist
         }
 
         List<ChatMessage> messages = chatMessageService.getPrivateMessages(currentUser, receiver);
-        
-		// System.out.println("********************************************************");
-        // System.out.println(messages);
-        // System.out.println("********************************************************");
-        
-        model.addAttribute("messages", messages);        
+
+        model.addAttribute("messages", messages);
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("receiver", receiver);
+
+        
+        System.out.println("Retrieved Messages: " + messages);
+        // System.out.println(currentUser);
+        System.out.println(receiver);
+       
+        
         return "chat/private-chat"; // Return the private chat view
-    }    
+    }
+   
  
     /**
      * Handles private messages sent directly to a specific user.

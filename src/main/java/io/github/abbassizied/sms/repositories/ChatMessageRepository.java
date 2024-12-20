@@ -14,6 +14,8 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
     @Query("SELECT m FROM ChatMessage m WHERE m.messageType = :type")
     List<ChatMessage> findAllMessagesByType(ChatMessageType type);
     
-    // Custom query to get private messages between sender and receiver
-    List<ChatMessage> findBySenderAndReceiver(User sender, User receiver);   
+    // Custom query to retrieve messages between two users, regardless of who sent the message.
+    // It checks for messages where 'sender' is the current user and 'receiver' is the recipient,
+    // or vice versa (to include messages sent by either user in the conversation).
+    List<ChatMessage> findBySenderAndReceiverOrSenderAndReceiver(User sender1, User receiver1, User sender2, User receiver2);
 }

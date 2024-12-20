@@ -9,6 +9,9 @@ public abstract class Message extends BaseEntity {
     @Column(name = "message_content", columnDefinition = "TEXT", updatable = false)
     protected String messageContent;
 
+    @Column(nullable = false)
+    protected boolean isSeen = false; // Default to false (unread)
+    
     public Message() {
         super();
     } 
@@ -21,9 +24,18 @@ public abstract class Message extends BaseEntity {
         this.messageContent = messageContent;
     }
 
-    @Override
-    public String toString() {
-        return "Message [messageContent=" + messageContent + ", id=" + id + ", createdAt=" + createdAt + ", updatedAt="
-                + updatedAt + "]";
+    // Getters and Setters for the 'isSeen' field
+    protected boolean getIsSeen() {
+        return isSeen;
     }
+
+    protected void setIsSeen(boolean isSeen) {
+        this.isSeen = isSeen;
+    }
+
+	@Override
+	public String toString() {
+		return "Message [messageContent=" + messageContent + ", isSeen=" + isSeen + ", id=" + id + ", createdAt="
+				+ createdAt + ", updatedAt=" + updatedAt + "]";
+	}
 }

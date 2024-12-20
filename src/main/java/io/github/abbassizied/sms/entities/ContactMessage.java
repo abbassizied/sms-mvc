@@ -1,7 +1,10 @@
 package io.github.abbassizied.sms.entities;
 
+import io.github.abbassizied.sms.enums.ContactMessageType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.*;
 
@@ -9,6 +12,10 @@ import jakarta.validation.constraints.*;
 @Table(name = "contact_messages")
 public class ContactMessage extends Message {
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "message_type")	
+	private ContactMessageType messageType;	
+	
     @NotBlank(message = "First name is required")
     @Size(max = 20, message = "First name must not exceed 20 characters")
     private String firstName;

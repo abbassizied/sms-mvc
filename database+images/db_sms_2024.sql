@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 16, 2024 at 10:31 PM
+-- Generation Time: Dec 19, 2024 at 11:29 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,6 +37,55 @@ CREATE TABLE `chat_messages` (
   `from_user_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `chat_messages`
+--
+
+INSERT INTO `chat_messages` (`id`, `created_at`, `updated_at`, `message_content`, `message_type`, `to_user_id`, `from_user_id`) VALUES
+(121, '2024-12-19 22:22:07.000000', '2024-12-19 22:22:07.000000', 'Hey team, we\'ve just received a new batch of products. The inventory system has been updated. Please check.', 'PUBLIC_CHAT', NULL, 1),
+(122, '2024-12-19 22:22:25.000000', '2024-12-19 22:22:25.000000', 'Thanks, Zied! I’ll take care of updating the stock details in the system and confirm with the warehouse team.', 'PUBLIC_CHAT', NULL, 2),
+(123, '2024-12-19 22:22:42.000000', '2024-12-19 22:22:42.000000', 'Great, I’ll make sure to add the new products to the order list as well. Any specifics we need to track for these items?', 'PUBLIC_CHAT', NULL, 6),
+(124, '2024-12-19 22:22:54.000000', '2024-12-19 22:22:54.000000', 'Yes, Olivia, please make sure the quantities match exactly with the shipment invoice. We had discrepancies last time.', 'PUBLIC_CHAT', NULL, 1),
+(125, '2024-12-19 22:23:04.000000', '2024-12-19 22:23:04.000000', 'Got it. I\'ll double-check with the warehouse team to ensure everything is in order.', 'PUBLIC_CHAT', NULL, 2),
+(126, '2024-12-19 22:23:19.000000', '2024-12-19 22:23:19.000000', 'Thanks, Emily! Once the stock is updated, we can start processing the pending orders.', 'PUBLIC_CHAT', NULL, 6),
+(127, '2024-12-19 22:23:32.000000', '2024-12-19 22:23:32.000000', 'Perfect! Let’s aim to fulfill the orders by the end of the day. Let me know if there are any issues.', 'PUBLIC_CHAT', NULL, 1),
+(128, '2024-12-19 22:23:43.000000', '2024-12-19 22:23:43.000000', 'Will do, Zied. I’ll keep you updated as we go.', 'PUBLIC_CHAT', NULL, 2),
+(129, '2024-12-19 22:23:55.000000', '2024-12-19 22:23:55.000000', 'Sounds good! I’ll check the order status later and update you both.', 'PUBLIC_CHAT', NULL, 6),
+(130, '2024-12-19 22:25:52.000000', '2024-12-19 22:25:52.000000', 'Hey Emily, I just noticed a discrepancy in the stock for the new batch. Can you double-check the shipment records?', 'PRIVATE_CHAT', 2, 1),
+(131, '2024-12-19 22:26:07.000000', '2024-12-19 22:26:07.000000', 'Hi Zied, sure, I’ll check the shipment records now. What specifically are you noticing that’s off?', 'PRIVATE_CHAT', 1, 2),
+(132, '2024-12-19 22:26:18.000000', '2024-12-19 22:26:18.000000', 'Some of the quantities don’t match what we were expecting based on the order confirmation. It seems like a few items might have been missed.', 'PRIVATE_CHAT', 2, 1),
+(133, '2024-12-19 22:26:30.000000', '2024-12-19 22:26:30.000000', 'I’ll get on it right away. I’ll also check the packing list to see if anything was overlooked during the shipment.', 'PRIVATE_CHAT', 1, 2),
+(134, '2024-12-19 22:26:43.000000', '2024-12-19 22:26:43.000000', 'Thanks, I appreciate it. I’ll be waiting for your update.', 'PRIVATE_CHAT', 2, 1),
+(135, '2024-12-19 22:26:56.000000', '2024-12-19 22:26:56.000000', 'Found the issue! It looks like two items were recorded incorrectly in the system. I’ll update the stock and send over the corrected info.', 'PRIVATE_CHAT', 1, 2),
+(136, '2024-12-19 22:27:07.000000', '2024-12-19 22:27:07.000000', 'Perfect, Emily! Once it’s updated, let me know, and I’ll review it. Thanks for handling this.', 'PRIVATE_CHAT', 2, 1),
+(137, '2024-12-19 22:27:18.000000', '2024-12-19 22:27:18.000000', 'All updated! I’ve sent the corrected stock data to your inbox. Please let me know if you need any further details.', 'PRIVATE_CHAT', 1, 2),
+(138, '2024-12-19 22:27:30.000000', '2024-12-19 22:27:30.000000', 'Great job, Emily! I’ll go over it now. Thanks again for your quick response.', 'PRIVATE_CHAT', 2, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `company_settings`
+--
+
+CREATE TABLE `company_settings` (
+  `id` bigint(20) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
+  `about_us` text DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `company_logo_url` varchar(255) DEFAULT NULL,
+  `company_name` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `company_settings`
+--
+
+INSERT INTO `company_settings` (`id`, `created_at`, `updated_at`, `about_us`, `address`, `company_logo_url`, `company_name`, `email`, `phone`) VALUES
+(1, '2024-12-18 23:06:33.000000', '2024-12-18 23:07:54.000000', 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', 'XXXXXXXXXXXX', 'XXXXXXXXXXXX', 'xxxxxxxxxxxxxxxx@example.com', '99999999');
+
 -- --------------------------------------------------------
 
 --
@@ -53,6 +102,13 @@ CREATE TABLE `contact_messages` (
   `last_name` varchar(20) NOT NULL,
   `subject` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `contact_messages`
+--
+
+INSERT INTO `contact_messages` (`id`, `created_at`, `updated_at`, `message_content`, `email`, `first_name`, `last_name`, `subject`) VALUES
+(1, '2024-12-17 21:48:45.000000', '2024-12-17 21:48:45.000000', 'test test test', 'abbassizied@outlook.fr', 'Zied', 'Abbassi', 'test test test');
 
 -- --------------------------------------------------------
 
@@ -137,8 +193,12 @@ CREATE TABLE `orders` (
   `id` bigint(20) NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) DEFAULT NULL,
-  `order_date` date NOT NULL,
-  `order_status` varchar(255) NOT NULL,
+  `adress` text DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `order_status` enum('CANCELED','COMPLETED','IN_PROGRESS') NOT NULL,
+  `phone` int(11) DEFAULT NULL,
   `total_amount` double NOT NULL,
   `customer_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -383,8 +443,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `created_at`, `updated_at`, `active`, `email`, `first_name`, `last_name`, `password`, `photo_url`) VALUES
-(1, '2024-12-16 20:08:14.000000', '2024-12-16 20:08:14.000000', b'1', 'abbassizied@outlook.fr', 'Zied', 'Abbassi', '$2a$10$E7da18FlvR0Cavh.pvL78.L4CGM2yNXbPFqKOWTobVAcL5Kd0kBYC', NULL),
-(2, '2024-12-16 21:22:34.000000', '2024-12-16 21:22:34.000000', b'1', 'emily.jones@example.com', 'Emily', 'Jones', '$2a$10$f/dNCDbJOgBCpEA4vqD8memLZzDTh4FDeuekDn2qHtayPLy0pEdtW', NULL),
+(1, '2024-12-16 20:08:14.000000', '2024-12-17 22:14:25.000000', b'1', 'abbassizied@outlook.fr', 'Zied', 'Abbassi', '$2a$10$E7da18FlvR0Cavh.pvL78.L4CGM2yNXbPFqKOWTobVAcL5Kd0kBYC', '1734473665810_user-2.jpg'),
+(2, '2024-12-16 21:22:34.000000', '2024-12-17 22:09:53.000000', b'1', 'emily.jones@example.com', 'Emily', 'Jones', '$2a$10$f/dNCDbJOgBCpEA4vqD8memLZzDTh4FDeuekDn2qHtayPLy0pEdtW', '1734473393070_user-1.jpeg'),
 (3, '2024-12-16 21:23:39.000000', '2024-12-16 21:23:39.000000', b'0', 'michael.smith@example.com', 'Michael', 'Smith', '$2a$10$vPz3MrFVCh9t3Zplh4sAje9Uzj.Gg4ztg1AmlrVTwYkMXqxuRMQvq', NULL),
 (4, '2024-12-16 21:24:23.000000', '2024-12-16 21:24:23.000000', b'0', 'sophia.lee@example.com', 'Sophia', 'Lee', '$2a$10$3w9WChFl03C2gwYaJ/ohye4r0DDBttsRPgU1.jsTcAEP4oh8fLZUO', NULL),
 (5, '2024-12-16 21:24:59.000000', '2024-12-16 21:24:59.000000', b'1', 'david.brown@example.com', 'David', 'Brown', '$2a$10$EgBwTRs92we43XKVrpUJFuBrQbW1pNXp9yYUJ/aIGrXPFDD9ECYS.', NULL),
@@ -428,6 +488,12 @@ ALTER TABLE `chat_messages`
   ADD KEY `FKjso027m9xea0jbskuulqn0gna` (`from_user_id`);
 
 --
+-- Indexes for table `company_settings`
+--
+ALTER TABLE `company_settings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `contact_messages`
 --
 ALTER TABLE `contact_messages`
@@ -451,6 +517,7 @@ ALTER TABLE `images`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `UK3ufrjob0ms2ekumsjt35g72s0` (`total_amount`),
   ADD KEY `FKpxtb8awmi0dk6smoh2vp1litg` (`customer_id`);
 
 --
@@ -532,13 +599,19 @@ ALTER TABLE `users_roles`
 -- AUTO_INCREMENT for table `chat_messages`
 --
 ALTER TABLE `chat_messages`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
+
+--
+-- AUTO_INCREMENT for table `company_settings`
+--
+ALTER TABLE `company_settings`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `contact_messages`
 --
 ALTER TABLE `contact_messages`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `customers`
