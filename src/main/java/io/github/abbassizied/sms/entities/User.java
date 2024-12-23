@@ -5,16 +5,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "users")  // "user" is a reserved keyword in some databases, so we use "users".
-public class User extends BaseEntity { 
-
-    @Column(nullable = false)
-    private String firstName;
- 
-    @Column(nullable = false)
-    private String lastName;
- 
-    @Column(nullable = false, unique = true)
-    private String email;
+public class User extends Person { 
 
     @Column(nullable = false)
     private String password;

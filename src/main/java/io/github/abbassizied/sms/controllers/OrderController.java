@@ -2,6 +2,7 @@ package io.github.abbassizied.sms.controllers;
 
 import io.github.abbassizied.sms.dtos.CartItemDTO;
 import io.github.abbassizied.sms.dtos.OrderDTO;
+import io.github.abbassizied.sms.entities.Customer;
 import io.github.abbassizied.sms.entities.Order;
 import io.github.abbassizied.sms.entities.OrderItem;
 import io.github.abbassizied.sms.entities.Product;
@@ -42,10 +43,40 @@ public class OrderController {
 	}    
 
     @GetMapping("/list")
-    public String listOrders(Model model) {
+    public String listOrders(Model model) {  	 
         model.addAttribute("orders", orderService.listOrders());
         return "order/listOrders";
     }
+
+
+    @GetMapping("/add")
+    public String addOrderForm(Model model) {
+    	
+        List<Product> products = productService.listProducts();  // Fetch products
+        System.out.println("Products: " + products);  // Debugging line to check the content  
+        
+        model.addAttribute("order", new Order());
+        model.addAttribute("products", products);
+        
+        return "order/addOrder";
+    }
+
+    @PostMapping("/add")
+    public String addOfflineOrder(@ModelAttribute("order") Order order) {
+    	System.out.println("********************************************************");
+    	System.out.println(order);
+    	System.out.println("********************************************************");
+    	
+    	
+    	
+    	
+    	
+    	
+    	//orderService.saveOrder(customer);
+        return "redirect:/orders/list";
+    }
+   
+    
 
     @GetMapping("/show/{id}")
     public String showOrder(@PathVariable("id") long id, Model model) {

@@ -1,13 +1,161 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{fragments/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
 <head>
-<title>Add Order</title>
+    <title>Add Order</title>
+	<!-- Include jQuery CDN -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+		integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>	
+	<!-- Custom JS -->
+	<script type="text/javascript" th:src="@{/shared/js/order.js}"></script>    
 </head>
 <body>
-	<section layout:fragment="content">
-		<!-- Add Order Content -->
-	</section>
+    <section layout:fragment="content">
+        <!-- Add Order Content -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Add Order</h2>
+
+                        <div class="form-validation">
+                            <form th:action="@{/orders/add}"
+                                  th:object="${order}"
+                                  method="post">
+
+                                <!-- Hidden field for Order ID (used for updates) -->
+                                <input type="hidden" th:field="*{id}" />
+
+                                <!-- Customer Email -->
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="email">
+                                        Email <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input type="email" class="form-control" id="email"
+                                               th:field="*{customer.email}"
+                                               placeholder="Enter email address" required />
+                                        <div th:if="${#fields.hasErrors('customer.email')}" class="text-danger">
+                                            <span th:errors="*{customer.email}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Customer First Name -->
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="firstName">
+                                        First Name <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" id="firstName"
+                                               th:field="*{customer.firstName}"
+                                               placeholder="Enter first name" required />
+                                        <div th:if="${#fields.hasErrors('customer.firstName')}" class="text-danger">
+                                            <span th:errors="*{customer.firstName}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Customer Last Name -->
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="lastName">
+                                        Last Name <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" id="lastName"
+                                               th:field="*{customer.lastName}"
+                                               placeholder="Enter last name" required />
+                                        <div th:if="${#fields.hasErrors('customer.lastName')}" class="text-danger">
+                                            <span th:errors="*{customer.lastName}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Customer Phone -->
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="phone">
+                                        Phone <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input type="tel" class="form-control" id="phone"
+                                               th:field="*{customer.phone}"
+                                               placeholder="Enter phone number" required />
+                                        <div th:if="${#fields.hasErrors('customer.phone')}" class="text-danger">
+                                            <span th:errors="*{customer.phone}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Customer Address -->
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="address">
+                                        Address <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <textarea class="form-control" id="address"
+                                                  th:field="*{customer.address}"
+                                                  placeholder="Enter shipping address" required></textarea>
+                                        <div th:if="${#fields.hasErrors('customer.address')}" class="text-danger">
+                                            <span th:errors="*{customer.address}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+    <!-- Product Selection with Quantity -->
+    <div class="form-group row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-3">    
+            <select class="form-control" id="productSelect" required>
+                <option value="" disabled selected>Select a product</option>
+                <option th:each="product : ${products}" th:value="${product.id}" th:data-price="${product.price}" th:text="${product.name}"></option>
+            </select>
+        </div>
+        <div class="col-lg-3">
+            <input class="form-control" id="quantity" type="number" name="quantity" min="1" placeholder="Quantity" required>        
+        </div>
+        <div class="col-lg-2">
+            <button class="btn btn-success" type="button" id="addProductBtn">Add Product</button> 
+        </div>           
+    </div>
+
+    <!-- Order List (Products Added to Order) -->
+    <div class="form-group row">
+        <label class="col-lg-4 col-form-label">Order List</label>
+        <div class="col-lg-6">
+            <ul id="orderList" class="list-group">
+                <!-- Dynamically populated with selected products -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Hidden fields to store the added products -->
+<div th:each="orderItem, iterStat : ${order.orderItems}">
+    <input type="hidden" th:field="*{orderItems[__${iterStat.index}__].product.id}" />
+    <input type="hidden" th:field="*{orderItems[__${iterStat.index}__].quantity}" />
+</div>
+
+
+
+
+
+                                <!-- Submit Button -->
+                                <div class="form-group row">
+                                    <div class="col-md-8 ml-auto">
+                                        <button type="submit" class="btn btn-primary">Submit Order</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+ 
+                    </div>
+                </div>    
+            </div>        
+        </div>        
+    </section>
 </body>
 </html>
