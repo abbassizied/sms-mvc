@@ -60,42 +60,192 @@ $ mvn spring-boot:run -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=d
 ## Core Entities
 
 ### Supplier Entity
-- Represents a supplier providing products.
 
-| Attribute      | Type        | Description                                   |
-|----------------|-------------|-----------------------------------------------|
-| `id`           | Integer     | Unique identifier for the supplier            |
-| `companyName`  | String      | Name of the supplier                          |
-| `logoUrl`      | String      | xxxxxxxxx logo image url xxxxxxxxx            |
-| `email`        | String      | Email address of the supplier                 |
-| `phone`        | String      | Phone number of the supplier                  |
-| `address`      | String      | Address of the supplier                       |
-| `createdAt`    | Timestamp   | Timestamp when the supplier was created       |
-| `updatedAt`    | Timestamp   | Timestamp when the supplier was last updated  |
+**Description:** Represents a supplier providing products to the system.
+
+| Attribute      | Type        | Description                                      |
+|----------------|-------------|--------------------------------------------------|
+| `id`           | Long        | Unique identifier for the supplier               |
+| `name`         | String      | Name of the supplier.                            |
+| `logoUrl`      | String      | URL for the supplier's logo.                     |
+| `email`        | String      | Email address of the supplier.                   |
+| `phone`        | String      | Contact phone number of the supplier.            |
+| `address`      | String      | Physical address of the supplier.                |
+| `createdAt`    | Timestamp   | Creation timestamp                               |
+| `updatedAt`    | Timestamp   | Last update timestamp                            |
+
+**Relationships:**
+- **One-to-Many:** A supplier can have multiple products (`List<Product>`).
+
+---
 
 ### Product Entity
 
-- Represents a product in the system.
+**Description:** Represents a product that can be purchased or sold in the system.
 
-| Attribute      | Type        | Description                                  |
-|----------------|-------------|----------------------------------------------|
-| `id`           | Long        | Unique identifier for the product            |
-| `name`         | String      | Name of the product                          |
-| `mainImage`    | String      | xxxxxxxx main image url xxxxxxxx             |
-| `description`  | String      | Description of the product                   |
-| `price`        | Double      | Price of the product                         |
-| `quantity`     | Integer     | Quantity of the product in stock             |
-| `reorderLevel` | Integer     | Stock level at which reordering is triggered |
-| `supplier`     | Supplier    | The supplier associated with the product     |
-| `discount`     | Discount    | Discount applied to the product              |
-| `images`       | List<Image> | List of images associated with the product   |
-| `createdAt`    | Timestamp   | Timestamp when the product was created       |
-| `updatedAt`    | Timestamp   | Timestamp when the product was last updated  |
+| Attribute         | Type        | Description                                                         |
+|--------------------|-------------|--------------------------------------------------------------------|
+| `id`              | Long        | Unique identifier for the product                                   |
+| `name`            | String      | Name of the product.                                                |
+| `mainImage`       | String      | URL for the main image of the product.                              |
+| `description`     | String      | Detailed description of the product.                                |
+| `price`           | Double      | Price of the product.                                               |
+| `initialQuantity` | Integer     | Initial stock quantity available for the product.                   |
+| `quantity`        | Integer     | Current available stock quantity.                                   |
+| `supplier`        | Supplier    | Supplier providing the product (Foreign Key: `supplier_id`).        |
+| `createdAt`       | Timestamp   | Creation timestamp.                                                 |
+| `updatedAt`       | Timestamp   | Last update timestamp.                                              |
 
+**Relationships:**
+- **Many-to-One:** Each product is linked to one supplier (`Supplier`).
+- **One-to-Many:** Each product can have multiple images (`List<Image>`).
 
-### Discount + Image
+**Notes:**
+- Supports cascading operations for related images. 
 
-### 
+---
+
+### Customer
+
+**Description:** Represents a customer who can place orders.
+
+| Attribute      | Type          | Description                                          |
+|----------------|---------------|------------------------------------------------------|
+| `id`           | Long          | Unique identifier for the customer                   |
+| `firstName`    | String        | Customer's first name                                |
+| `lastName`     | String        | Customer's last name                                 |
+| `email`        | String        | Customer's email address                             |
+| `phone`        | String        | Customer's phone number                              |
+| `address`      | String (Text) | Customer's address                                   |
+| `orders`       | List<Order>   | List of orders placed by the customer                |
+| `createdAt`    | Timestamp     | Record creation timestamp                            |
+| `updatedAt`    | Timestamp     | Last update timestamp                                |
+
+---
+
+### Order
+
+**Description:** Represents a customer's order containing multiple items.
+
+| Attribute      | Type                | Description                                           |
+|----------------|---------------------|-------------------------------------------------------|
+| `id`           | Long                | Unique identifier for the order                       |
+| `orderStatus`  | OrderStatus (Enum)  | Status of the order (IN_PROGRESS, CANCELED, COMPLETED)|
+| `totalAmount`  | Double              | Total amount for the order                            |
+| `customer`     | Customer            | Associated customer                                   |
+| `orderItems`   | List<OrderItem>     | List of items in the order                            |
+| `createdAt`    | Timestamp           | Record creation timestamp                             |
+| `updatedAt`    | Timestamp           | Last update timestamp                                 |
+
+#### **Enum Notes:**
+
+- **OrderStatus**: Tracks the status of the order.
+
+---
+
+### OrderItem
+
+**Description:** Represents an item in an order.
+
+| Attribute      | Type        | Description                                            |
+|----------------|-------------|--------------------------------------------------------|
+| `id`           | Long        | Unique identifier for the order item                   |
+| `quantity`     | Integer     | Quantity of the product                                |
+| `order`        | Order       | Associated order                                       |
+| `product`      | Product     | Associated product                                     |
+| `createdAt`    | Timestamp   | Record creation timestamp                              |
+| `updatedAt`    | Timestamp   | Last update timestamp                                  |
+
+---
+
+### Purchase
+
+**Description:** Represents a purchase transaction involving a supplier.
+
+| Attribute          | Type                 | Description                                        |
+|---------------------|----------------------|---------------------------------------------------|
+| `id`               | Long                 | Unique identifier for the purchase                 |
+| `totalAmount`      | Double               | Total amount of the purchase                       |
+| `supplier`         | Supplier             | Associated supplier                                |
+| `purchaseItems`    | List<PurchaseItem>   | List of items included in the purchase             |
+| `createdAt`        | Timestamp            | Record creation timestamp                          |
+| `updatedAt`        | Timestamp            | Last update timestamp                              |
+
+---
+
+### PurchaseItem
+
+**Description:** Represents an item in a purchase.
+
+| Attribute        | Type        | Description                                             |
+|------------------|-------------|---------------------------------------------------------|
+| `id`             | Long        | Unique identifier for the purchase item                 |
+| `quantity`       | Integer     | Quantity of the product purchased                       |
+| `subTotalPrice`  | Double      | Subtotal price for this purchase item                   |
+| `purchase`       | Purchase    | Associated purchase                                     |
+| `product`        | Product     | Associated product                                      |
+| `createdAt`      | Timestamp   | Record creation timestamp                               |
+| `updatedAt`      | Timestamp   | Last update timestamp                                   |
+
+---
+
+### User
+
+**Description:** Represents a system user with roles and permissions.
+
+| Attribute          | Type              | Description                                        |
+|---------------------|-------------------|---------------------------------------------------|
+| `id`               | Long              | Unique identifier for the user                     |
+| `firstName`        | String            | User's first name                                  |
+| `lastName`         | String            | User's last name (inherited from Person)           |
+| `email`            | String            | User's email address (inherited from Person)       |
+| `password`         | String            | Encrypted password                                 |
+| `photoUrl`         | String            | Optional URL to the user's profile photo           |
+| `active`           | Boolean           | Indicates if the user account is active            |
+| `roles`            | Set<Role>         | Roles assigned to the user                         |
+| `notifications`    | List<Notification>| Notifications related to the user                  |
+| `createdAt`        | Timestamp         | Record creation timestamp                          |
+| `updatedAt`        | Timestamp         | Last update timestamp                              |
+
+---
+
+### Role
+
+**Description:** Represents a role assigned to users.
+
+| Attribute       | Type              | Description                                         |
+|------------------|-------------------|----------------------------------------------------|
+| `id`            | Long              | Unique identifier for the role                      |
+| `name`          | String            | Name of the role                                    |
+| `privileges`    | Set<Privilege>    | Privileges associated with the role                 |
+| `createdAt`     | Timestamp         | Record creation timestamp                           |
+| `updatedAt`     | Timestamp         | Last update timestamp                               |
+
+#### **Enum Notes:**
+
+- **EPrivilege**: Defines granular permissions like USER_READ, ROLE_WRITE, etc.
+
+---
+
+### Notification
+
+**Description:** Represents system notifications.
+
+| Attribute            | Type                | Description                                         |
+|----------------------|---------------------|-----------------------------------------------------|
+| `id`                 | Long                | Unique identifier for the notification              |
+| `isSeen`             | Boolean             | Indicates if the notification has been seen         |
+| `notificationType`   | NotificationType    | Type of notification                                |
+| `body`               | String (Text)       | Notification body text                              |
+| `user`               | User                | Associated user (optional)                          |
+| `createdAt`          | Timestamp           | Record creation timestamp                           |
+| `updatedAt`          | Timestamp           | Last update timestamp                               |
+
+#### **Enum Notes:**
+
+- **NotificationType**: Tracks notification types like RECEIVED_CONTACT_MESSAGE.
+
+--- 
 
 
 
