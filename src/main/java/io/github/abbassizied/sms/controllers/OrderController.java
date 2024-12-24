@@ -6,8 +6,11 @@ import io.github.abbassizied.sms.entities.Customer;
 import io.github.abbassizied.sms.entities.Order;
 import io.github.abbassizied.sms.entities.OrderItem;
 import io.github.abbassizied.sms.entities.Product;
+import io.github.abbassizied.sms.entities.User;
+import io.github.abbassizied.sms.services.CustomerService;
 import io.github.abbassizied.sms.services.OrderService;
 import io.github.abbassizied.sms.services.ProductService;
+import io.github.abbassizied.sms.services.UserService;
 
 import java.security.Principal;
 import java.util.*;
@@ -29,11 +32,17 @@ public class OrderController {
 
 	private final OrderService orderService;
 	private final ProductService productService;
+	private final UserService userService;
+	private final CustomerService customerService;
 	
     public OrderController( OrderService orderService,
-                            ProductService productService) {
+                            ProductService productService,
+                            UserService userService,
+                            CustomerService customerService) {
         this.orderService = orderService;
         this.productService = productService;
+        this.userService = userService;
+        this.customerService = customerService;
     } 
  
 	// Redirect root URL to the paginated list view
@@ -55,8 +64,11 @@ public class OrderController {
         List<Product> products = productService.listProducts();  // Fetch products
         System.out.println("Products: " + products);  // Debugging line to check the content  
         
+        List<Customer> customers = customerService.listCustomers();
+        
         model.addAttribute("order", new Order());
         model.addAttribute("products", products);
+        model.addAttribute("customers", customers);
         
         return "order/addOrder";
     }
@@ -102,23 +114,34 @@ public class OrderController {
         System.out.println("Inside checkout method!"); // Log to verify controller method execution
      
 		Order order = new Order();
-		List<OrderItem> orderItems = new ArrayList<>(); // Ensure this is initialized properly
+		List<OrderItem> newOrderItems = new ArrayList<>(); // Ensure this is initialized properly
 		
 		for(CartItemDTO cartItem : orderRequest.items()) {
 			OrderItem orderItem = new OrderItem();
 			orderItem.setQuantity(cartItem.quantity());
 			 
 			Product product = productService.getProductById(cartItem.productId());
-			orderItem.setProduct(product);
-	        orderItems.add(orderItem); 
+			orderItem.setProduct(product);			
+			newOrderItems.add(orderItem); 
 		}
 		
-		order.setOrderItems(orderItems);
+		order.setOrderItems(newOrderItems);
+		
+		String email = principal.getName();
+		User user= userService.findByEmail(email);
+		Customer customer = new Customer();
+		customer.setEmail(user.getEmail());
+		customer.setFirstName(user.getFirstName());
+		customer.setLastName(user.getLastName()); 
+		
+		System.out.println(customer);
+ 
+		order.setCustomer(customer);
 		System.out.println("Order created: " + order);
 		  
 		try { 
 			// Example: Save to database  
-			
+			orderService.saveOrder(order);
 	        // Return a success message
 	        return ResponseEntity.ok("Purchase completed successfully!");
 

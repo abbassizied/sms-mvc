@@ -1,6 +1,8 @@
 package io.github.abbassizied.sms.entities;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import io.github.abbassizied.sms.enums.OrderStatus;
@@ -11,17 +13,17 @@ public class Order extends BaseEntity {
 
 	@Enumerated(EnumType.STRING) // Use EnumType.STRING to store enum names in the database
 	@Column(name = "order_status", nullable = false)
-	private OrderStatus orderStatus;
+	private OrderStatus orderStatus = OrderStatus.IN_PROGRESS;
 
 	@Column(unique = true, nullable = false)
-	private Double totalAmount;
+	private Double totalAmount = 0.0;;
 
 	@ManyToOne
 	@JoinColumn(name = "customer_id", nullable = false)
 	private Customer customer;
 
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<OrderItem> orderItems;
+	private List<OrderItem> orderItems = new ArrayList<>();
 
 	// Default constructor
 	public Order() {
@@ -53,6 +55,7 @@ public class Order extends BaseEntity {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+		System.out.println("****************" + customer);
 	}
 
 	public List<OrderItem> getOrderItems() {
@@ -63,10 +66,14 @@ public class Order extends BaseEntity {
 		this.orderItems = orderItems;
 	}
 
-	@Override
-	public String toString() {
-		return "Order [orderStatus=" + orderStatus + ", totalAmount=" + totalAmount + ", customer=" + customer
-				+ ", orderItems=" + orderItems + ", id=" + id + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt
-				+ "]";
-	}
+    @Override
+    public String toString() {
+        return "Order{" +
+               "id=" + id +
+               ", customer=" + (customer != null ? customer.getId() : "null") + // Avoid printing customer object fully
+               ", totalAmount=" + totalAmount +
+               ", orderStatus='" + orderStatus + '\'' +
+               ", orderItemsCount=" + (orderItems != null ? orderItems.size() : 0) + // Avoid printing the list of order items
+               '}';
+    }	 
 }
